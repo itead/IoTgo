@@ -1,0 +1,18 @@
+<div class="row row-centered login">
+  <div class="col-xs-6 col-sm-5 col-md-4 col-centered">
+    <h1>Welcome Back to IoTgo</h1>
+    <form ng-submit="login()">
+      <div class="form-group">
+        <label class="sr-only" for="email">Email Address</label>
+        <input ng-model="email" class="form-control input-lg"
+               id="email" type="email" required placeholder="Email Address">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="password">Password</label>
+        <input ng-model="password" class="form-control input-lg"
+               id="password" type="password" required placeholder="Password">
+      </div>
+      <input class="btn btn-block btn-lg btn-primary" type="submit" value="Log In">
+    </form>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="device-params">
+  Light: {{activeDevice.params.light | uppercase}}
+</div>
+<div>
+  <div class="btn-group">
+    <button ng-click="turnOn(activeDevice, 'light')"
+            ng-disabled="activeDevice.params.light === 'on'"
+            type="button" class="btn btn-success">Light On</button>
+    <button ng-click="turnOff(activeDevice, 'light')"
+            ng-disabled="activeDevice.params.light === 'off'"
+            type="button" class="btn btn-warning">Light Off</button>
+  </div>
+</div>

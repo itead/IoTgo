@@ -1,0 +1,74 @@
+<div class="panel panel-primary user">
+  <div class="panel-heading clearfix">
+    <div class="panel-title pull-left">
+      {{user.email}} ({{user.apikey}}) since
+      {{user.createdAt | date:'yyyy-MM-dd'}}
+    </div>
+    <div class="pull-right">
+      <button ng-click="delete()"
+              class="btn btn-warning">Delete</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="(group, items) in devices"
+         class="panel panel-default device-group">
+      <div class="panel-heading">
+        <div class="panel-title">{{group}}</div>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="device in items" ng-click="showDevice(device)"
+             class="device">
+          <img ng-src="/admin/images/{{device.type | typeToImage}}"
+               class="device-icon"/>
+          <span class="device-name">{{device.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="activeDevice">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <div class="modal-title">{{activeDevice.name}}</div>
+      </div>
+
+      <div class="modal-body text-center">
+        To honor users' privacy, we are better not to see the device status.
+      </div>
+
+      <div class="modal-footer">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device ID</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.deviceid" type="text"
+                     class="form-control" disabled placeholder="Device ID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device Name</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.name" type="text"
+                     class="form-control" required placeholder="Device Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Group Name</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.group" type="text"
+                     class="form-control" required placeholder="Group Name">
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

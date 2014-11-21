@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html ng-app="iotgo">
+<head>
+  <title>IoTgo - Open Source IoT Platform</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
+  <link rel='stylesheet'
+        href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono'>
+  <link rel="stylesheet"
+        href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet"
+        href="bower_components/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
+  <link rel="stylesheet" href="iotgo.css">
+</head>
+<body class="iotgo">
+<div ng-controller="NavCtrl" class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">IoTgo</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav iotgo-menu">
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/features">Features</a></li>
+        <li><a href="/guide">Guide</a></li>
+        <li><a href="/api">API reference</a></li>
+        <li><a href="/contact-us">Contact us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-show="isLoggedIn()"><a href="/devices">Devices</a></li>
+        <li ng-show="isLoggedIn()"><a href="/profile">Profile</a></li>
+        <li ng-show="isLoggedIn()"><a ng-click="logout()" href="/logout">Log out</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/login">Log in</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/signup">Sign up</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container main" ng-view></div>
+
+<div class="footer">
+  <div class="about">
+    <div class="container">
+      <div class="col-md-4">
+        <h3>About IoTgo</h3>
+        <p>IoTgo is an open source IoT platform, like WordPress, ZenCart
+          and all other open source software, you can deploy your own IoTgo
+          cloud platform.</p>
+        <p>ITEAD Studio is committed to provide a complete set of hardware
+          for the cloud platform with open source hardware designs and open
+          source firmware code.</p>
+      </div>
+      <div class="col-md-4">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="/features">Features</a></li>
+          <li><a href="/guide">Guide</a></li>
+          <li><a href="/api">API reference</a></li>
+          <li><a href="/hardware">Hardware reference</a></li>
+          <li><a href="/download">Download source code</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h3>About ITEAD</h3>
+        <p>ITEAD Studio is a hardware innovation platform for makers to grow
+          inspirations into differentiating products. Our goal is to make
+          innovation easier.</p>
+        <p>We offer a variety of open source hardware for developers to
+          reduce the difficulty of prototyping and development time. We help
+          developers design, produce and sell their products.</p>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <div class="container">
+      <div class="col-sm-3">
+        <div class="text-left logo-grey">IoTgo</div>
+      </div>
+      <div class="col-sm-6">
+        <div class="text-center">
+          &copy; 2014 ITEAD Intelligent Systems Co.Ltd
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="text-right">
+          <span class="fa fa-lg fa-facebook-square"></span>
+          <span class="fa fa-lg fa-twitter-square"></span>
+          <span class="fa fa-lg fa-google-plus-square"></span>
+          <span class="fa fa-lg fa-github-square"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="iotgo.js"></script>
+<script src="services/user.js"></script>
+<script src="services/device.js"></script>
+<script src="services/auth-interceptor.js"></script>
+<script src="services/websocket.js"></script>
+<script src="filters/type-to-image.js"></script>
+<script src="filters/type-to-html.js"></script>
+<script src="controllers/index.js"></script>
+<script src="controllers/nav.js"></script>
+<script src="controllers/login.js"></script>
+<script src="controllers/signup.js"></script>
+<script src="controllers/profile.js"></script>
+<script src="controllers/devices.js"></script>
+</body>
+</html>

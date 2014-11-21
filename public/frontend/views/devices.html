@@ -1,0 +1,213 @@
+<div class="row devices">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        My Account
+      </div>
+      <div class="list-group">
+        <a href="/profile" class="list-group-item">My Profile</a>
+        <a href="/devices" class="list-group-item active">My Devices</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading clearfix">
+        <div class="panel-title pull-left">My Devices</div>
+        <div class="btn-group pull-right">
+          <button ng-click="showModal('#createDevice')"
+                  class="btn btn-warning">Create New Device</button>
+          <button ng-click="showModal('#addDevice')"
+                  class="btn btn-success">Add Existing Device</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="(group, items) in devices"
+             class="panel panel-default device-group">
+          <div class="panel-heading">
+            <div class="panel-title">{{group}}</div>
+          </div>
+          <div class="panel-body">
+            <div ng-repeat="device in items" ng-click="showDevice(device)"
+                 class="device">
+              <img ng-src="/images/{{device.type | typeToImage}}"
+                   class="device-icon"/>
+              <span class="device-name">{{device.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createDevice">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <div class="modal-title">Create New Device</div>
+      </div>
+
+      <div class="modal-body">
+        <form ng-submit="createDevice()" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device
+              Name</label>
+            <div class="col-sm-6">
+              <input ng-model="device.name" type="text"
+                     class="form-control" required placeholder="Device Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device Type</label>
+            <div class="col-sm-6">
+              <select ng-model="device.type" class="form-control">
+                <option value="01">01 (Power switch)</option>
+                <option value="02">02 (Simple light)</option>
+                <option value="03">03 (Temperature and humidity sensor)</option>
+                <option value="00">00 (Custom device type)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Group
+              Name</label>
+            <div class="col-sm-6">
+              <input ng-model="device.group" type="text"
+                     class="form-control" required placeholder="Group Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-4">
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addDevice">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <div class="modal-title">Add Existing Device</div>
+      </div>
+
+      <div class="modal-body">
+        <form ng-submit="addDevice()" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device Name</label>
+            <div class="col-sm-6">
+              <input ng-model="device.name" type="text"
+                     class="form-control" required placeholder="Device Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Group Name</label>
+            <div class="col-sm-6">
+              <input ng-model="device.group" type="text"
+                     class="form-control" required placeholder="Group Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device ID</label>
+            <div class="col-sm-6">
+              <input ng-model="device.deviceid" type="text"
+                     class="form-control" required placeholder="Device ID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Factory API Key</label>
+            <div class="col-sm-6">
+              <input ng-model="device.apikey" type="text"
+                     class="form-control" required
+                     placeholder="Factory API Key">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-4">
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="activeDevice">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <div class="modal-title">{{activeDevice.name}}</div>
+      </div>
+
+      <div class="modal-body text-center">
+        <div ng-include="activeDevice.type | typeToHtml:'/views/types/'"></div>
+      </div>
+
+      <div class="modal-footer">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device ID</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.deviceid" type="text"
+                     class="form-control" disabled placeholder="Device ID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Device Name</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.name" type="text"
+                     class="form-control" required placeholder="Device Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Group Name</label>
+            <div class="col-sm-6">
+              <input ng-model="activeDevice.group" type="text"
+                     class="form-control" required placeholder="Group Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-4">
+              <div class="btn-group pull-right">
+                <button ng-click="saveDevice()" type="button"
+                        class="btn btn-primary">Save</button>
+                <button ng-click="deleteDevice()" type="button"
+                        class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

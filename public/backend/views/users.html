@@ -1,0 +1,55 @@
+<div class="panel panel-default users">
+  <div class="panel-heading">
+    <form class="form-inline">
+      <div class="form-group">
+        <input ng-model="email" class="form-control"
+               type="text" placeholder="User Email">
+        <button ng-click="quickSearch()" type="button"
+                class="btn btn-primary">Quick Search</button>
+      </div>
+      <div class="btn-group pull-right">
+        <button ng-click="resetSearch()" type="button"
+                class="btn btn-warning">Reset</button>
+        <button ng-click="advancedSearch()" type="button"
+                class="btn btn-primary">Advanced Search</button>
+      </div>
+    </form>
+  </div>
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th class="created-at">
+        <div>Created At</div>
+        <input ng-model="search.createdAtFrom"
+               class="form-control input-sm" type="date">
+        <input ng-model="search.createdAtTo"
+               class="form-control input-sm" type="date">
+      </th>
+      <th class="user-email">
+        <div>Email Address</div>
+        <input ng-model="search.email"
+               class="form-control input-sm" type="text">
+      </th>
+      <th class="api-key">
+        <div>API Key</div>
+        <input ng-model="search.apikey"
+               class="form-control input-sm" type="text">
+      </th>
+      <th class="user-delete">
+        <div>Delete</div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-click="goToUser(user)" ng-repeat="user in users">
+      <td>{{user.createdAt | date:'yyyy-MM-dd'}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.apikey}}</td>
+      <td>
+        <span ng-click="delete(user); $event.stopPropagation();"
+                class="glyphicon glyphicon-remove"></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

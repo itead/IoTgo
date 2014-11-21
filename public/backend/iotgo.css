@@ -1,0 +1,142 @@
+body {
+  font-family: 'Droid Sans', sans-serif;
+}
+.navbar-brand,
+.navbar-nav {
+  text-transform: uppercase;
+}
+.navbar-brand {
+  text-indent: -9999px;
+  background: transparent url(images/logo.png) 0 0 no-repeat scroll;
+  width: 95px;
+}
+.iotgo-menu {
+  margin-left: 2em;
+}
+.main {
+  min-height: 480px;
+  margin-bottom: 40px;
+}
+/* centered columns styles */
+.row-centered {
+  text-align:center;
+}
+.col-centered {
+  display:inline-block;
+  float:none;
+  /* reset the text-align */
+  text-align:left;
+  /* inline-block space fix */
+  margin-right:-4px;
+}
+.login h1, .login input.form-control,
+.signup h1, .signup input.form-control {
+  text-align: center;
+}
+
+/* factory devices view */
+.factory-devices .form-control.batch-create {
+  width: 105px;
+}
+.factory-devices .created-at {
+  width: 300px;
+}
+.factory-devices .created-at input.form-control {
+  display: inline-block;
+  width: 140px;
+}
+.factory-devices .device-id,
+.factory-devices .device-type {
+  width: 120px;
+}
+.factory-devices .api-key {
+  width: 300px;
+}
+
+/* devices view */
+.devices .created-at input.form-control,
+.devices .updated-at input.form-control {
+  width: 140px;
+}
+.devices .device-id,
+.devices .device-type {
+  width: 120px;
+}
+.devices .api-key {
+  width: 300px;
+}
+
+/* users view */
+.users .created-at input.form-control {
+  display: inline-block;
+  width: 140px;
+}
+.users th:last-child,
+.users td:last-child {
+  text-align: center;
+}
+
+/* user detail view */
+.user .panel-title.pull-left {
+  padding: 6px 0;
+}
+.user .device-group {
+  margin: 0 20px 20px 0;
+  float: left;
+  width: 256px;
+}
+.user .device-group > .panel-body {
+  min-height: 228px;
+}
+.user .device {
+  width: 64px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  margin: 0 10px 10px 0;
+}
+.user .device > img {
+  width: 64px;
+  display: block;
+}
+.user .device > span {
+  display: block;
+  margin-top: 5px;
+}
+
+/* Home page */
+.iotgo-features {
+  margin: 0;
+  background-color: gainsboro;
+  border-bottom: 2px solid #444;
+}
+.iotgo-features h4 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.iotgo-platforms {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 2px solid #DDD;
+}
+.iotgo-platforms .text-muted {
+  font-size: 20px;
+  font-weight: bold;
+}
+.iotgo-platforms .list-inline {
+  text-align: right;
+}
+.iotgo-platforms .list-inline>li {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.iotgo-process h4 {
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.iotgo-diy {
+  color: #0066ff;
+}
+.iotgo-ready {
+  color: #009900;
+}

@@ -1,0 +1,20 @@
+module.exports = {
+  host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo platform
+  db: {                             
+    uri: 'mongodb://localhost/iotgo',   // MongoDB database address
+    options: {
+      user: 'iotgo',                    // MongoDB database username
+      pass: 'iotgo'                     // MongoDB database password
+    }
+  },
+  jwt: {
+    secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
+  },
+  admin:{
+    'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo platform
+  },
+  page: {
+    limit: 50,                          // Default query page limit
+    sort: -1                            // Default query sort order
+  }
+};
