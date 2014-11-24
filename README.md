@@ -116,7 +116,8 @@ sudo chmod 755 /etc/init.d/iotgo
 sudo update-rc.d iotgo defaults
 ```
 
-*Note: please refer to Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu [https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/] for detailed explanations of the script.*
+*Note: please refer to [Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu](https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/) for detailed explanations of the script.*
+
 
 ```bash
 #!/bin/bash
