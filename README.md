@@ -1,4 +1,4 @@
-# IoTgo-Platform
+# IoTgo Platform
 
 ## Introdution
 
@@ -20,188 +20,188 @@ For more detailed information and a working IoTgo Platform, please head over to 
 
 ## Installation
 
-  ### Prerequisite
+### Prerequisite
 
-    - [Git](http://git-scm.com/): Free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+- [Git](http://git-scm.com/): Free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
 
-    - [MongoDB](https://www.mongodb.org/): Open-source document database, the leading NoSQL database
-    
-    - [Node.js](http://nodejs.org/): An asynchronous JavaScipt event driven framework, and yes, JavaScript on the server!
-    
-    - [Forever](https://www.npmjs.org/package/forever): Running Node application as system service.
-  
-    - [Bower](http://bower.io/): A package manager for the web, optimized for the front-end.
+- [MongoDB](https://www.mongodb.org/): Open-source document database, the leading NoSQL database
 
-  ### Install IoTgo Platform
+- [Node.js](http://nodejs.org/): An asynchronous JavaScipt event driven framework, and yes, JavaScript on the server!
 
-    Get IoTgo Platform source code from github.com
+- [Forever](https://www.npmjs.org/package/forever): Running Node application as system service.
 
-    ```
-    git clone https://github.com/itead/IoTgo-Platform.git
-    ```
+- [Bower](http://bower.io/): A package manager for the web, optimized for the front-end.
 
-    Change directory to downloaded IoTgo-Platform and install dependencies.
+### Install IoTgo Platform
 
-    ```
-    cd IoTgo-Platform && npm install
-    ```
+Get IoTgo Platform source code from github.com
 
-    Change directory to IoTgo-Platform Web App frontend and install dependencies.
+```
+git clone https://github.com/itead/IoTgo-Platform.git
+```
 
-    ```   
-    cd public/frontend && bower install
-    ```
+Change directory to downloaded IoTgo-Platform and install dependencies.
 
-    Change directory to IoTgo-Platform Web App backend and install dependencies.
+```
+cd IoTgo-Platform && npm install
+```
 
-    ```
-    cd ../backend && bower install
-    ```
+Change directory to IoTgo-Platform Web App frontend and install dependencies.
 
-    Change directory back to IoTgo-Platform root
+```   
+cd public/frontend && bower install
+```
 
-    ```
-    cd ../..
-    ```
+Change directory to IoTgo-Platform Web App backend and install dependencies.
 
-  ### Configure IoTgo Platform
+```
+cd ../backend && bower install
+```
 
-    Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo Platform boot process.
+Change directory back to IoTgo-Platform root
 
-    ```
-    copy config.js.sample config.js
-    ```
+```
+cd ../..
+```
 
-    Edit config.js and change corresponding fields to reflect your hosting environment.
+### Configure IoTgo Platform
 
-    ```js
-    module.exports = {
-      host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo platform
-      db: {
-        uri: 'mongodb://localhost/iotgo',   // MongoDB database address
-        options: {
-          user: 'iotgo',                    // MongoDB database username
-          pass: 'iotgo'                     // MongoDB database password
-        }
-      },
-      jwt: {
-        secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
-      },
-      admin:{
-        'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo platform
-      },
-      page: {
-        limit: 50,                          // Default query page limit
-        sort: -1                            // Default query sort order
-      }
-    };
-    ```
+Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo Platform boot process.
 
-  ### IoTgo Platform as System Service
-  
-  To manage IoTgo Platform like system service, such as:
+```
+copy config.js.sample config.js
+```
 
-  ```
-  sudo service iotgo start  // Start IoTgo Platform
-  sudo service iotgo stop // Stop IoTgo Platform
-  ```
+Edit config.js and change corresponding fields to reflect your hosting environment.
 
-  and make IoTgo Platform start automatically during OS boot, we can create init scripts utilizing [Forever](https://www.npmjs.org/package/forever) to monitor IoTgo Platform.
-
-  The following init script is a working example. If you want to use it, please put the script in `/etc/init.d/` folder and change file permission to 755. You may also need to change `NAME`, `NODE_PATH`, `NODE_APPLICATION_PATH` to reflect your hosting environment.
-
-  ```
-  sudo touch /etc/init.d/iotgo
-  sudo chmod 755 /etc/init.d/iotgo
-  sudo update-rc.d iotgo defaults
-  ```
-
-  *Note: please refer to Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu [https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/] for detailed explanations of the script.*
-
-  ```bash
-  #!/bin/bash
-  #
-  # An init.d script for running a Node.js process as a service using Forever as
-  # the process monitor. For more configuration options associated with Forever,
-  # see: https://github.com/nodejitsu/forever
-  #
-  # This was written for Debian distributions such as Ubuntu, but should still
-  # work on RedHat, Fedora, or other RPM-based distributions, since none of the
-  # built-in service functions are used. So information is provided for both.
-  #
-
-  NAME="ITEAD IoTgo Platform"
-  NODE_BIN_DIR="/usr/bin:/usr/local/bin"
-  NODE_PATH="/home/itead/IoTgo-Platform/node_modules"
-  APPLICATION_PATH="/home/itead/IoTgo-Platform/bin/www"
-  PIDFILE="/var/run/iotgo-platform.pid"
-  LOGFILE="/var/log/iotgo-platform.log"
-  MIN_UPTIME="5000"
-  SPIN_SLEEP_TIME="2000"
-   
-  PATH=$NODE_BIN_DIR:$PATH
-  export NODE_PATH=$NODE_PATH
-   
-  start() {
-      echo "Starting $NAME"
-      forever \
-        --pidFile $PIDFILE \
-        -a \
-        -l $LOGFILE \
-        --minUptime $MIN_UPTIME \
-        --spinSleepTime $SPIN_SLEEP_TIME \
-        start $APPLICATION_PATH 2>&1 > /dev/null &
-      RETVAL=$?
+```js
+module.exports = {
+  host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo platform
+  db: {
+    uri: 'mongodb://localhost/iotgo',   // MongoDB database address
+    options: {
+      user: 'iotgo',                    // MongoDB database username
+      pass: 'iotgo'                     // MongoDB database password
+    }
+  },
+  jwt: {
+    secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
+  },
+  admin:{
+    'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo platform
+  },
+  page: {
+    limit: 50,                          // Default query page limit
+    sort: -1                            // Default query sort order
   }
-   
-  stop() {
-      if [ -f $PIDFILE ]; then
-          echo "Shutting down $NAME"
-          forever stop $APPLICATION_PATH 2>&1 > /dev/null
-          rm -f $PIDFILE
-          RETVAL=$?
-      else
-          echo "$NAME is not running."
-          RETVAL=0
-      fi
-  }
-   
-  restart() {
-      stop
-      start
-  }
-   
-  status() {
-      echo `forever list` | grep -q "$APPLICATION_PATH"
-      if [ "$?" -eq "0" ]; then
-          echo "$NAME is running."
-          RETVAL=0
-      else
-          echo "$NAME is not running."
-          RETVAL=3
-      fi
-  }
-   
-  case "$1" in
-      start)
-          start
-          ;;
-      stop)
-          stop
-          ;;
-      status)
-          status
-          ;;
-      restart)
-          restart
-          ;;
-      *)
-          echo "Usage: {start|stop|status|restart}"
-          exit 1
-          ;;
-  esac
-  exit $RETVAL
-  ```
+};
+```
+
+### IoTgo Platform as System Service
+
+To manage IoTgo Platform like system service, such as:
+
+```
+sudo service iotgo start  // Start IoTgo Platform
+sudo service iotgo stop // Stop IoTgo Platform
+```
+
+and make IoTgo Platform start automatically during OS boot, we can create init scripts utilizing [Forever](https://www.npmjs.org/package/forever) to monitor IoTgo Platform.
+
+The following init script is a working example. If you want to use it, please put the script in `/etc/init.d/` folder and change file permission to 755. You may also need to change `NAME`, `NODE_PATH`, `NODE_APPLICATION_PATH` to reflect your hosting environment.
+
+```
+sudo touch /etc/init.d/iotgo
+sudo chmod 755 /etc/init.d/iotgo
+sudo update-rc.d iotgo defaults
+```
+
+*Note: please refer to Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu [https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/] for detailed explanations of the script.*
+
+```bash
+#!/bin/bash
+#
+# An init.d script for running a Node.js process as a service using Forever as
+# the process monitor. For more configuration options associated with Forever,
+# see: https://github.com/nodejitsu/forever
+#
+# This was written for Debian distributions such as Ubuntu, but should still
+# work on RedHat, Fedora, or other RPM-based distributions, since none of the
+# built-in service functions are used. So information is provided for both.
+#
+
+NAME="ITEAD IoTgo Platform"
+NODE_BIN_DIR="/usr/bin:/usr/local/bin"
+NODE_PATH="/home/itead/IoTgo-Platform/node_modules"
+APPLICATION_PATH="/home/itead/IoTgo-Platform/bin/www"
+PIDFILE="/var/run/iotgo-platform.pid"
+LOGFILE="/var/log/iotgo-platform.log"
+MIN_UPTIME="5000"
+SPIN_SLEEP_TIME="2000"
+ 
+PATH=$NODE_BIN_DIR:$PATH
+export NODE_PATH=$NODE_PATH
+ 
+start() {
+    echo "Starting $NAME"
+    forever \
+      --pidFile $PIDFILE \
+      -a \
+      -l $LOGFILE \
+      --minUptime $MIN_UPTIME \
+      --spinSleepTime $SPIN_SLEEP_TIME \
+      start $APPLICATION_PATH 2>&1 > /dev/null &
+    RETVAL=$?
+}
+ 
+stop() {
+    if [ -f $PIDFILE ]; then
+        echo "Shutting down $NAME"
+        forever stop $APPLICATION_PATH 2>&1 > /dev/null
+        rm -f $PIDFILE
+        RETVAL=$?
+    else
+        echo "$NAME is not running."
+        RETVAL=0
+    fi
+}
+ 
+restart() {
+    stop
+    start
+}
+ 
+status() {
+    echo `forever list` | grep -q "$APPLICATION_PATH"
+    if [ "$?" -eq "0" ]; then
+        echo "$NAME is running."
+        RETVAL=0
+    else
+        echo "$NAME is not running."
+        RETVAL=3
+    fi
+}
+ 
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    restart)
+        restart
+        ;;
+    *)
+        echo "Usage: {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
+exit $RETVAL
+```
 
 ## Running IoTgo Platform
 
@@ -224,6 +224,12 @@ sudo service iotgo start
 ```
 
 ## Web API
+
+  User
+
+  Device
+
+  Admin
 
 ## Device API
 
