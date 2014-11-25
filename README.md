@@ -8,6 +8,8 @@ We at ITEAD Studio are committed to provide a complete set of hardware for IoTgo
 
 The overall IoTgo system architecture including platform and devices is illustrated by following graph.
 
+<img src="docs/iotgo-arch.png">
+
 Single-board microcontroller (like Arduino) developers, single-board computer (like Raspberry PI) developers and other embedded system developers could use IoTgo Platform Device API to connect their devices to IoTgo Platform and then easily control their devices by utilizing IoTgo Platform Web App.
 
 Note: we also provide IoTgo Device SDK which wraps IoTgo Platform Device API. Please refer to [https://github.com/itead/IoTgo](https://github.com/itead/IoTgo) for details.
