@@ -268,8 +268,8 @@ Request body:
 
 ```json
 {
-  "email": "iotgo@iteadstudio.com", // Valid email address as account name
-  "password": "password"  // Password for this account
+  "email": "iotgo@iteadstudio.com",
+  "password": "password"
 }
 ```
 
@@ -296,8 +296,8 @@ Request body:
 
 ```json
 {
-  "email": "iotgo@iteadstudio.com", // Email address of user account
-  "password": "password"  // Password for this account
+  "email": "iotgo@iteadstudio.com",
+  "password": "password"
 }
 ```
 

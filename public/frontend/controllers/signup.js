@@ -8,7 +8,7 @@ angular.module('iotgo').
             return;
           }
 
-          $location.path('/profile');
+          $location.path('/devices');
         });
       };
     }
