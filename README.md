@@ -8,7 +8,7 @@ We at ITEAD Studio are committed to provide a complete set of hardware for IoTgo
 
 The overall IoTgo system architecture including platform and devices is illustrated by following graph.
 
-<img src="docs/iotgo-arch.png">
+![IoTgo System Architecture](docs/iotgo-arch.png)
 
 Single-board microcontroller (like Arduino) developers, single-board computer (like Raspberry PI) developers and other embedded system developers could use IoTgo Platform Device API to connect their devices to IoTgo Platform and then easily control their devices by utilizing IoTgo Platform Web App.
 
@@ -228,11 +228,136 @@ sudo service iotgo start
 
 ## Web API
 
-  User
+IoTgo Platform provides a [RESTful Web API](http://en.wikipedia.org/wiki/Representational_state_transfer) to interact with clients (Web App, Mobile App, Desktop App, etc.).
 
-  Device
+The general process is as follows:
 
-  Admin
+- Client sends HTTP request to IoTgo Platform.
+
+  - If it is a POST request, then data must be coded in [JSON](http://en.wikipedia.org/wiki/JSON) format and carried in request body.
+
+- IoTgo Platform does some validation against the request.
+
+  - If the validation failed, IoTgo Platform will reply with proper response code and reason.
+
+  - If the validation succeeded, IoTgo Platform will continue processing the request, and reply with 200 OK status code and process result encoded in JSON format.
+
+- Client checks the response from IoTgo Platform.
+
+  - If the status code is not 200 OK, then the request is probably illegal or bad formed.
+
+  - If the status code is 200 OK, but the data (JSON format) has an `error` property, then the request still fails. The value of `error` property is the reason of failure.
+
+  - If the status code is 200 OK, and there is no `error` property in the data, then the request succeeds (finally!). Extract the data and do whatever you want :smiley:
+
+IoTgo Platform is also using [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-31) to protect Web API, so most of these Web API requests must carry `Authorization` header with `JSON Web Token` obtained from `register` or `login` request.
+
+```
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NDYxNjQ1NGM4ODIzNzFlMWMxOTcyNmYiLCJlbWFpbCI6ImhvbGx5LmhlQGl0ZWFkLmNjIiwiY3JlYXRlZEF0IjoiMjAxNC0xMS0xMVQwMToyMDoyMC4yNjFaIiwiYXBpa2V5IjoiMTU3ODNmZDYtMDc1MS00ODBmLTllMzAtNWZmZTNhNWM4MTM1IiwiaWF0IjoxNDE1NjczNTExfQ.e-gi5N8AIGVeBA5S6vYg9cEaCSGnaFUCscIsYQ2kXoI
+```
+
+### User
+
+#### /api/user/register
+
+Register an account on IoTgo Platform. *Authorization not required*
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+  "email": "iotgo@iteadstudio.com", // Valid email address as account name
+  "password": "password"  // Password for this account
+}
+```
+
+Response body:
+
+```json
+{
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI", 
+    "user": {
+        "email": "iotgo@iteadstudio.com", 
+        "createdAt": "2014-11-24T06:49:20.822Z", 
+        "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14", 
+    }
+}
+```
+
+#### /api/user/login
+
+Log in IoTgo Platform using email address and password. *Authorization not required*
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+  "email": "iotgo@iteadstudio.com", // Email address of user account
+  "password": "password"  // Password for this account
+}
+```
+
+Response body:
+
+```json
+{
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI", 
+    "user": {
+        "email": "iotgo@iteadstudio.com", 
+        "createdAt": "2014-11-24T06:49:20.822Z", 
+        "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14", 
+    }
+}
+```
+
+#### /api/user/password
+
+Change password for the user identified by JSON Web Token. *Authorization required*
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+  "oldPassword": "old password",
+  "newPassword": "new password"
+}
+```
+
+Response body:
+
+```json
+{}
+```
+
+### Device
+
+#### /api/user/device
+
+#### /api/user/device/:deviceid
+
+#### /api/user/device/add
+
+### Admin
+
+#### /api/admin/login
+
+#### /api/admin/users
+
+#### /api/admin/users/:apikey
+
+#### /api/admin/devices
+
+#### /api/admin/devices/:deviceid
+
+#### /api/admin/factorydevices
+
+#### /api/admin/factorydevices/create
 
 ## Device API
 
