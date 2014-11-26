@@ -1,24 +1,24 @@
-# IoTgo Platform
+# IoTgo
 
 ## Introdution
 
-IoTgo Platform is an open source IoT platform, like WordPress, ZenCart and all other open source software, you can deploy your own IoTgo cloud platform.
+IoTgo is an open source IoT platform, like WordPress, ZenCart and all other open source software, you can deploy your own IoTgo cloud service.
 
-We at ITEAD Studio are committed to provide a complete set of hardware for IoTgo Platform with open source hardware designs and open source firmware.
+We at ITEAD Studio are committed to provide a complete set of hardware for IoTgo with open source hardware designs and open source firmware.
 
-The overall IoTgo system architecture including platform and devices is illustrated by following graph.
+The overall IoTgo system architecture including IoTgo, IoTgo-compatible apps and IoTgo-compatible devices is illustrated by following graph.
 
 ![IoTgo System Architecture](docs/iotgo-arch.png)
 
-Single-board microcontroller (like Arduino) developers, single-board computer (like Raspberry PI) developers and other embedded system developers could use IoTgo Platform Device API to connect their devices to IoTgo Platform and then easily control their devices by utilizing IoTgo Platform Web App.
+Single-board microcontroller (like Arduino) developers, single-board computer (like Raspberry PI) developers and other embedded system developers could use IoTgo Device API to connect their devices to IoTgo and then easily control their devices by utilizing IoTgo Web App.
 
-Note: we also provide IoTgo Device SDK which wraps IoTgo Platform Device API. Please refer to [https://github.com/itead/IoTgo](https://github.com/itead/IoTgo) for details.
+Note: we also provide IoTgo-compatible Device Library which wraps IoTgo Device API. Please refer to [IoTgo Arduino Library](https://github.com/itead/ITEADLIB_Arduino_IoTgo), [IoTgo Segnix Library](https://github.com/itead/Segnix/tree/master/libraries/itead_IoTgo) for details.
 
-Web developers and mobile developers could use IoTgo Platform Web API to build various apps that manage devices connected to IoTgo Platform. To control those devices, IoTgo Platform Device API can be used.
+Web developers and mobile developers could use IoTgo Web API to build various apps that manage devices connected to IoTgo. To control those devices, IoTgo Device API can be used.
 
 **In one word, we want to provide cloud capability for device developers and device capability for app developers.**
 
-For more detailed information and a working IoTgo Platform, please head over to [iotgo.iteadstudio.com](http://iotgo.iteadstudio.com/).
+For more detailed information and a working IoTgo cloud service, please head over to [iotgo.iteadstudio.com](http://iotgo.iteadstudio.com/).
 
 ## Installation
 
@@ -34,41 +34,41 @@ For more detailed information and a working IoTgo Platform, please head over to 
 
 - [Bower](http://bower.io/): A package manager for the web, optimized for the front-end.
 
-### Install IoTgo Platform
+### Install IoTgo
 
-Get IoTgo Platform source code from github.com
-
-```
-git clone https://github.com/itead/IoTgo-Platform.git
-```
-
-Change directory to downloaded IoTgo-Platform and install dependencies.
+Get IoTgo source code from github.com
 
 ```
-cd IoTgo-Platform && npm install
+git clone https://github.com/itead/IoTgo.git
 ```
 
-Change directory to IoTgo-Platform Web App frontend and install dependencies.
+Change directory to downloaded IoTgo and install dependencies.
+
+```
+cd IoTgo && npm install
+```
+
+Change directory to IoTgo Web App frontend and install dependencies.
 
 ```   
 cd public/frontend && bower install
 ```
 
-Change directory to IoTgo-Platform Web App backend and install dependencies.
+Change directory to IoTgo Web App backend and install dependencies.
 
 ```
 cd ../backend && bower install
 ```
 
-Change directory back to IoTgo-Platform root
+Change directory back to IoTgo root
 
 ```
 cd ../..
 ```
 
-### Configure IoTgo Platform
+### Configure IoTgo
 
-Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo Platform boot process.
+Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo boot process.
 
 ```
 copy config.js.sample config.js
@@ -78,7 +78,7 @@ Edit config.js and change corresponding fields to reflect your hosting environme
 
 ```js
 module.exports = {
-  host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo platform
+  host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo
   db: {
     uri: 'mongodb://localhost/iotgo',   // MongoDB database address
     options: {
@@ -90,7 +90,7 @@ module.exports = {
     secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
   },
   admin:{
-    'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo platform
+    'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo
   },
   page: {
     limit: 50,                          // Default query page limit
@@ -99,16 +99,16 @@ module.exports = {
 };
 ```
 
-### IoTgo Platform as System Service
+### IoTgo as System Service
 
-To manage IoTgo Platform like system service, such as:
+To manage IoTgo like system service, such as:
 
 ```
-sudo service iotgo start  // Start IoTgo Platform
-sudo service iotgo stop // Stop IoTgo Platform
+sudo service iotgo start  // Start IoTgo
+sudo service iotgo stop // Stop IoTgo
 ```
 
-and make IoTgo Platform start automatically during OS boot, we can create init scripts utilizing [Forever](https://www.npmjs.org/package/forever) to monitor IoTgo Platform.
+and make IoTgo start automatically during OS boot, we can create init scripts utilizing [Forever](https://www.npmjs.org/package/forever) to monitor IoTgo.
 
 The following init script is a working example. If you want to use it, please put the script in `/etc/init.d/` folder and change file permission to 755. You may also need to change `NAME`, `NODE_PATH`, `NODE_APPLICATION_PATH` to reflect your hosting environment.
 
@@ -119,7 +119,6 @@ sudo update-rc.d iotgo defaults
 ```
 
 *Note: please refer to [Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu](https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/) for detailed explanations of the script.*
-
 
 ```bash
 #!/bin/bash
@@ -133,12 +132,12 @@ sudo update-rc.d iotgo defaults
 # built-in service functions are used. So information is provided for both.
 #
 
-NAME="ITEAD IoTgo Platform"
+NAME="ITEAD IoTgo"
 NODE_BIN_DIR="/usr/bin:/usr/local/bin"
-NODE_PATH="/home/itead/IoTgo-Platform/node_modules"
-APPLICATION_PATH="/home/itead/IoTgo-Platform/bin/www"
-PIDFILE="/var/run/iotgo-platform.pid"
-LOGFILE="/var/log/iotgo-platform.log"
+NODE_PATH="/home/itead/IoTgo/node_modules"
+APPLICATION_PATH="/home/itead/IoTgo/bin/www"
+PIDFILE="/var/run/iotgo.pid"
+LOGFILE="/var/log/iotgo.log"
 MIN_UPTIME="5000"
 SPIN_SLEEP_TIME="2000"
  
@@ -206,21 +205,21 @@ esac
 exit $RETVAL
 ```
 
-## Running IoTgo Platform
+## Running IoTgo
 
-To run IoTgo Platform, you can start it in console mode
+To run IoTgo, you can start it in console mode
 
 ```
 DEBUG="iotgo" ./bin/www
 ```
 
-To run IoTgo Platform on other port instead of 80, you can use PORT environment variable.
+To run IoTgo on other port instead of 80, you can use PORT environment variable.
 
 ```
 PORT="3000" DEBUG="iotgo" ./bin/www
 ```
 
-To run IoTgo Platform as system service
+To run IoTgo as system service
 
 ```
 sudo service iotgo start
@@ -228,21 +227,21 @@ sudo service iotgo start
 
 ## Web API
 
-IoTgo Platform provides a [RESTful Web API](http://en.wikipedia.org/wiki/Representational_state_transfer) to interact with clients (Web App, Mobile App, Desktop App, etc.).
+IoTgo provides a [RESTful Web API](http://en.wikipedia.org/wiki/Representational_state_transfer) to interact with clients (Web App, Mobile App, Desktop App, etc.).
 
 The general process is as follows:
 
-- Client sends HTTP request to IoTgo Platform.
+- Client sends HTTP request to IoTgo.
 
   - If it is a POST request, then data must be coded in [JSON](http://en.wikipedia.org/wiki/JSON) format and carried in request body.
 
-- IoTgo Platform does some validation against the request.
+- IoTgo does some validation against the request.
 
-  - If the validation failed, IoTgo Platform will reply with proper response code and reason.
+  - If the validation failed, IoTgo will reply with proper response code and reason.
 
-  - If the validation succeeded, IoTgo Platform will continue processing the request, and reply with 200 OK status code and process result encoded in JSON format.
+  - If the validation succeeded, IoTgo will continue processing the request, and reply with 200 OK status code and process result encoded in JSON format.
 
-- Client checks the response from IoTgo Platform.
+- Client checks the response from IoTgo.
 
   - If the status code is not 200 OK, then the request is probably illegal or bad formed.
 
@@ -250,7 +249,7 @@ The general process is as follows:
 
   - If the status code is 200 OK, and there is no `error` property in the data, then the request succeeds (finally!). Extract the data and do whatever you want :smiley:
 
-IoTgo Platform is also using [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-31) to protect Web API, so most of these Web API requests must carry `Authorization` header with `JSON Web Token` obtained from `register` or `login` request.
+IoTgo is also using [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-31) to protect Web API, so most of these Web API requests must carry `Authorization` header with `JSON Web Token` obtained from `register` or `login` request.
 
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NDYxNjQ1NGM4ODIzNzFlMWMxOTcyNmYiLCJlbWFpbCI6ImhvbGx5LmhlQGl0ZWFkLmNjIiwiY3JlYXRlZEF0IjoiMjAxNC0xMS0xMVQwMToyMDoyMC4yNjFaIiwiYXBpa2V5IjoiMTU3ODNmZDYtMDc1MS00ODBmLTllMzAtNWZmZTNhNWM4MTM1IiwiaWF0IjoxNDE1NjczNTExfQ.e-gi5N8AIGVeBA5S6vYg9cEaCSGnaFUCscIsYQ2kXoI
@@ -260,7 +259,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NDYxNjQ1N
 
 #### /api/user/register
 
-Register an account on IoTgo Platform. *Authorization not required*
+Register an account on IoTgo. *Authorization not required*
 
 Request method: `POST`
 
@@ -288,7 +287,7 @@ Response body:
 
 #### /api/user/login
 
-Log in IoTgo Platform using email address and password. *Authorization not required*
+Log in IoTgo using email address and password. *Authorization not required*
 
 Request method: `POST`
 
@@ -365,4 +364,4 @@ Response body:
 
 ## License
 
-[MIT](https://github.com/itead/IoTgo-Platform/blob/master/LICENSE)
+[MIT](https://github.com/itead/IoTgo/blob/master/LICENSE)
