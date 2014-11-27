@@ -78,24 +78,24 @@ Edit config.js and change corresponding fields to reflect your hosting environme
 
 ```js
 module.exports = {
-  host: 'iotgo.iteadstudio.com',        // Hostname of IoTgo
-  db: {
-    uri: 'mongodb://localhost/iotgo',   // MongoDB database address
-    options: {
-      user: 'iotgo',                    // MongoDB database username
-      pass: 'iotgo'                     // MongoDB database password
+    host: 'iotgo.iteadstudio.com',          // Hostname of IoTgo
+    db: {
+        uri: 'mongodb://localhost/iotgo',   // MongoDB database address
+        options: {
+            user: 'iotgo',                  // MongoDB database username
+            pass: 'iotgo'                   // MongoDB database password
+        }
+    },
+    jwt: {
+        secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
+    },
+    admin:{
+        'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo
+    },
+    page: {
+        limit: 50,                          // Default query page limit
+        sort: -1                            // Default query sort order
     }
-  },
-  jwt: {
-    secret: 'jwt_secret'                // Shared secret to encrypt JSON Web Token
-  },
-  admin:{
-    'iotgo@iteadstudio.com': 'password' // Administrator account of IoTgo
-  },
-  page: {
-    limit: 50,                          // Default query page limit
-    sort: -1                            // Default query sort order
-  }
 };
 ```
 
@@ -267,8 +267,8 @@ Request body:
 
 ```json
 {
-  "email": "iotgo@iteadstudio.com",
-  "password": "password"
+    "email": "iotgo@iteadstudio.com",
+    "password": "password"
 }
 ```
 
@@ -295,8 +295,8 @@ Request body:
 
 ```json
 {
-  "email": "iotgo@iteadstudio.com",
-  "password": "password"
+    "email": "iotgo@iteadstudio.com",
+    "password": "password"
 }
 ```
 
@@ -323,8 +323,8 @@ Request body:
 
 ```json
 {
-  "oldPassword": "old password",
-  "newPassword": "new password"
+    "oldPassword": "old password",
+    "newPassword": "new password"
 }
 ```
 
@@ -333,30 +333,326 @@ Response body:
 ```json
 {}
 ```
-
 ### Device
 
 #### /api/user/device
 
+Create new device by using POST request, get the list of devices owned by user by using GET request. **_Authorization required_**
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01"
+}
+```
+
+Response body:
+
+```json
+{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z"
+}
+```
+
+Request method: `GET`
+
+Response body:
+
+```json
+[{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z"
+}]
+```
+
 #### /api/user/device/:deviceid
 
+Get detailed device information by using GET request, update device name and group by using POST request, delete device by using DELETE request. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z",
+    "params": {
+        "switch": "on"
+    },
+    "lastModified": "2014-11-27T02:27:41.363Z"
+}
+```
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+    "name": "New Name",
+    "group": "New Group"
+}
+```
+
+Response body:
+
+```json
+{
+    "name": "New Name",
+    "group": "New Group",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z",
+    "params": {
+        "switch": "on"
+    },
+    "lastModified": "2014-11-27T02:27:41.363Z"
+}
+```
+
+Request method: `DELETE`
+
+Response body:
+
+```json
+{
+    "name": "New Name",
+    "group": "New Group",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z",
+    "params": {
+        "switch": "on"
+    },
+    "lastModified": "2014-11-27T02:27:41.363Z"
+}
+```
+
 #### /api/user/device/add
+
+Add indie device which is manufactured by ITEAD or ITEAD licensed manufacturers. **_Authorization required_**
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+    "name": "Lamp",
+    "group": "Indie",
+    "deviceid": "0280000001",
+    "apikey": "f44eeb0b-8a9e-4454-ad51-89beb93b072e"
+}
+```
+
+Response body:
+
+```json
+{
+    "name": "Lamp",
+    "group": "Indie",
+    "deviceid": "0280000001",
+    "apikey": "f44eeb0b-8a9e-4454-ad51-89beb93b072e",
+    "createdAt": "2014-11-27T02:49:42.000Z",
+    "params": {}
+}
+```
 
 ### Admin
 
 #### /api/admin/login
 
+Log in IoTgo admin area using email address and password. **_Authorization not required_**
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+    "email": "admin@iteadstudio.com",
+    "password": "password"
+}
+```
+
+Response body:
+
+```json
+{
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI", 
+    "user": {
+        "email": "admin@iteadstudio.com",
+        "isAdmin": true
+    }
+}
+```
+
 #### /api/admin/users
+
+Get the list of registered users on IoTgo. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+[{
+    "email": "humingchun@gmail.com",
+    "apikey": "ea62c15b-d194-4b16-a56e-7ad8433c5477",
+    "createdAt": "2014-11-27T02:50:10.000Z"
+}]
+```
 
 #### /api/admin/users/:apikey
 
+Get detailed user information by using GET request, delete user and related devices by using DELETE request. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+{
+    "email": "humingchun@gmail.com",
+    "apikey": "ea62c15b-d194-4b16-a56e-7ad8433c5477",
+    "createdAt": "2014-11-27T02:50:10.000Z"
+}
+```
+
+Request method: `DELETE`
+
+Response body:
+
+```json
+{
+    "email": "humingchun@gmail.com",
+    "apikey": "ea62c15b-d194-4b16-a56e-7ad8433c5477",
+    "createdAt": "2014-11-27T02:50:10.000Z"
+}
+```
+
 #### /api/admin/devices
+
+Get the list of created/added devices on IoTgo. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+[{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z"
+}]
+```
 
 #### /api/admin/devices/:deviceid
 
+Get detailed device information. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+{
+    "name": "Switch",
+    "group": "ITEAD",
+    "type": "01", 
+    "deviceid": "0100000001", 
+    "apikey": "b45c1e61-964a-4ad3-9b9d-0b97ac95fe14",
+    "createdAt": "2014-11-24T02:27:41.363Z",
+    "params": {
+        "switch": "on"
+    },
+    "lastModified": "2014-11-27T02:27:41.363Z"
+}
+```
+
 #### /api/admin/factorydevices
 
+Get issued licenses (for licensing indie devices) on IoTgo. **_Authorization required_**
+
+Request method: `GET`
+
+Response body:
+
+```json
+[{
+    "name": "ITEAD",
+    "type": "01", 
+    "deviceid": "0180000001", 
+    "apikey": "94b38bbe-57c8-49bf-a6c4-2871ee5bb873",
+    "createdAt": "2014-11-27T02:50:20.000Z"
+},
+{
+    "name": "ITEAD",
+    "type": "01", 
+    "deviceid": "0180000002", 
+    "apikey": "938a8f4f-9f0f-424b-b5ac-f58b8f7a539c",
+    "createdAt": "2014-11-27T02:50:20.000Z"
+}]
+```
+
 #### /api/admin/factorydevices/create
+
+Generate new licenses for indie devices. **_Authorization required_**
+
+Request method: `POST`
+
+Request body:
+
+```json
+{
+    "name": "ITEAD",
+    "type": "02",
+    "qty": 2
+}
+```
+
+Response body:
+
+```json
+[{
+    "name": "ITEAD",
+    "type": "02", 
+    "deviceid": "0280000001", 
+    "apikey": "37e45852-a381-4243-8bfe-cc3c4c2becab",
+    "createdAt": "2014-11-27T03:00:00.000Z"
+},
+{
+    "name": "ITEAD",
+    "type": "02", 
+    "deviceid": "0280000002", 
+    "apikey": "41556a98-7685-424f-bc27-74bf712108b2",
+    "createdAt": "2014-11-27T03:00:00.000Z"
+}]
+```
 
 ## Device API
 
