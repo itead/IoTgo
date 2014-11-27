@@ -20,6 +20,28 @@ Web developers and mobile developers could use IoTgo Web API to build various ap
 
 For more detailed information and a working IoTgo cloud service, please head over to [iotgo.iteadstudio.com](http://iotgo.iteadstudio.com/).
 
+## Future Plan
+
+IoTgo is not an ordinary IoT cloud platform, we designed this platform to be open, simple and easy to use, so everyone can handle the hardware, software and website design in the same time. 
+
+However, this platform is still very primitive. For now, it only supports three simple device types. We know what we provide is not enough to satisfy your need. That’s why we set up this Future Plan to improve IoTgo step by step. Let’s see what we will do in the near future.
+
+1. Improve UI design: display device connecting status and last connect time on device detail page.
+
+2. Support GPS device: receive device GPS information and display the exact location on google map.
+
+3. Add the functions of brightness control and RGB adjustment for Light device.
+
+4. Show power consumption information and the control function for Switch device.
+
+5. Store historic data collected from all kinds of sensers.
+
+6. Provide websocket interface and support bidirectional communication between IoTgo and devices.
+
+7. Provide Android app code
+
+**If you have any advice, please contact us. We sincerely appreciate it.**
+
 ## Installation
 
 ### Prerequisite
@@ -661,25 +683,3 @@ Response body:
 ## License
 
 [MIT](https://github.com/itead/IoTgo/blob/master/LICENSE)
-
-## Future Plan
-
-IoTgo is not an ordinary IoT cloud platform, we designed this platform to be open, simple and easy to use, so everyone can handle the hardware, software and website design in the same time. 
-
-However, this platform is still very primitive. For now, it only supports three simple device types. We know what we provide is not enough to satisfy your need. That’s why we set up this Future Plan to improve IoTgo step by step. Let’s see what we will do in the near future.
-
-1. Improve UI design: display device connecting status and last connect time on device detail page.
-
-2. Support GPS device: receive device GPS information and display the exact location on google map.
-
-3. Add the functions of brightness control and RGB adjustment for Light device.
-
-4. Show power consumption information and the control function for Switch device.
-
-5. Store historic data collected from all kinds of sensers.
-
-6. Provide websocket interface and support bidirectional communication between IoTgo and devices.
-
-7. Provide Android app code
-
-**If you have any advice, please contact us. We sincerely appreciate it.**
