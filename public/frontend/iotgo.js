@@ -22,6 +22,24 @@ angular.module('iotgo', [ 'ngRoute', 'ngResource' ]).
           templateUrl: '/views/devices.html',
           controller: 'DevicesCtrl'
         }).
+        when('/pricing', {
+          templateUrl: '/views/pricing.html'
+        }).
+        when('/about', {
+          templateUrl: '/views/about.html'
+        }).
+        when('/guide', {
+          templateUrl: '/views/guide.html'
+        }).
+        when('/api', {
+          templateUrl: '/views/api.html'
+        }).
+        when('/contact', {
+          templateUrl: '/views/contact.html'
+        }).
+        when('/hardware', {
+          templateUrl: '/views/hardware.html'
+        }).
         otherwise({
           redirectTo: '/'
         });

@@ -21,6 +21,15 @@ body {
   font-size: 24px;
   margin-bottom: 15px;
 }
+.main h2 {
+  font-size: 20px;
+}
+.main h3 {
+  font-size: 18px;
+}
+.main h4 {
+  font-size: 16px;
+}
 /* centered columns styles */
 .row-centered {
   text-align:center;
@@ -85,6 +94,9 @@ body {
   background: transparent url(images/logo-grey.png) left center no-repeat scroll;
   padding: 1em 0;
   margin: -1em 0;
+}
+.copyright a {
+  color: #FFF;
 }
 /* Home page */
 .iotgo-features {
