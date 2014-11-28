@@ -1,1 +1,311 @@
-APi
+<div class="api">
+  <h1 id="web-api">Web API</h1>
+  <p>IoTgo provides a <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful Web API</a> to interact with clients (Web App, Mobile App, Desktop App, etc.).</p>
+  <p>The general process is as follows:</p>
+  <ul>
+    <li><p>Client sends HTTP request to IoTgo.</p>
+      <ul>
+        <li>If it is a POST request, then data must be coded in <a href="http://en.wikipedia.org/wiki/JSON">JSON</a> format and carried in request body.</li>
+      </ul>
+    </li>
+    <li><p>IoTgo does some validation against the request.</p>
+      <ul>
+        <li><p>If the validation failed, IoTgo will reply with proper response code and reason.</p>
+        </li>
+        <li><p>If the validation succeeded, IoTgo will continue processing the request, and reply with 200 OK status code and process result encoded in JSON format.</p>
+        </li>
+      </ul>
+    </li>
+    <li><p>Client checks the response from IoTgo.</p>
+      <ul>
+        <li><p>If the status code is not 200 OK, then the request is probably illegal or bad formed.</p>
+        </li>
+        <li><p>If the status code is 200 OK, but the data (JSON format) has an <code>error</code> property, then the request still fails. The value of <code>error</code> property is the reason of failure.</p>
+        </li>
+        <li><p>If the status code is 200 OK, and there is no <code>error</code> property in the data, then the request succeeds (finally!). Extract the data and do whatever you want :smiley:</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p>IoTgo is also using <a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-31">JSON Web Token</a> to protect Web API, so most of these Web API requests must carry <code>Authorization</code> header with <code>JSON Web Token</code> obtained from <code>register</code> or <code>login</code> request.</p>
+  <pre><code>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NDYxNjQ1NGM4ODIzNzFlMWMxOTcyNmYiLCJlbWFpbCI6ImhvbGx5LmhlQGl0ZWFkLmNjIiwiY3JlYXRlZEF0IjoiMjAxNC0xMS0xMVQwMToyMDoyMC4yNjFaIiwiYXBpa2V5IjoiMTU3ODNmZDYtMDc1MS00ODBmLTllMzAtNWZmZTNhNWM4MTM1IiwiaWF0IjoxNDE1NjczNTExfQ.e-gi5N8AIGVeBA5S6vYg9cEaCSGnaFUCscIsYQ2kXoI
+  </code></pre><h3 id="user">User</h3>
+    <h4 id="-api-user-register">/api/user/register</h4>
+    <p>Register an account on IoTgo. <strong><em>Authorization not required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"iotgo@iteadstudio.com"</span></span>,
+    "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"password"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">jwt</span>": <span class="hljs-value"><span class="hljs-string">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI"</span></span>,
+    "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"iotgo@iteadstudio.com"</span></span>,
+          "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T06:49:20.822Z"</span></span>,
+          "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+      }
+  </span>}
+  </code></pre>
+    <h4 id="-api-user-login">/api/user/login</h4>
+    <p>Log in IoTgo using email address and password. <strong><em>Authorization not required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"iotgo@iteadstudio.com"</span></span>,
+    "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"password"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">jwt</span>": <span class="hljs-value"><span class="hljs-string">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI"</span></span>,
+    "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"iotgo@iteadstudio.com"</span></span>,
+          "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T06:49:20.822Z"</span></span>,
+          "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+      }
+  </span>}
+  </code></pre>
+    <h4 id="-api-user-password">/api/user/password</h4>
+    <p>Change password for the user identified by JSON Web Token. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">oldPassword</span>": <span class="hljs-value"><span class="hljs-string">"old password"</span></span>,
+    "<span class="hljs-attribute">newPassword</span>": <span class="hljs-value"><span class="hljs-string">"new password"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{}
+  </code></pre>
+    <h3 id="device">Device</h3>
+    <h4 id="-api-user-device">/api/user/device</h4>
+    <p>Create new device by using POST request, get the list of devices owned by user by using GET request. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span>
+  </span>}
+  </code></pre>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">[{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span>
+  </span>}]
+  </code></pre>
+    <h4 id="-api-user-device-deviceid">/api/user/device/:deviceid</h4>
+    <p>Get detailed device information by using GET request, update device name and group by using POST request, delete device by using DELETE request. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span></span>,
+    "<span class="hljs-attribute">params</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">switch</span>": <span class="hljs-value"><span class="hljs-string">"on"</span>
+      </span>}</span>,
+    "<span class="hljs-attribute">lastModified</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:27:41.363Z"</span>
+  </span>}
+  </code></pre>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Name"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"New Group"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Name"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"New Group"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span></span>,
+    "<span class="hljs-attribute">params</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">switch</span>": <span class="hljs-value"><span class="hljs-string">"on"</span>
+      </span>}</span>,
+    "<span class="hljs-attribute">lastModified</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:27:41.363Z"</span>
+  </span>}
+  </code></pre>
+    <p>Request method: <code>DELETE</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"New Name"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"New Group"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span></span>,
+    "<span class="hljs-attribute">params</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">switch</span>": <span class="hljs-value"><span class="hljs-string">"on"</span>
+      </span>}</span>,
+    "<span class="hljs-attribute">lastModified</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:27:41.363Z"</span>
+  </span>}
+  </code></pre>
+    <h4 id="-api-user-device-add">/api/user/device/add</h4>
+    <p>Add indie device which is manufactured by ITEAD or ITEAD licensed manufacturers. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Lamp"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"Indie"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0280000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"f44eeb0b-8a9e-4454-ad51-89beb93b072e"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Lamp"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"Indie"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0280000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"f44eeb0b-8a9e-4454-ad51-89beb93b072e"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:49:42.000Z"</span></span>,
+    "<span class="hljs-attribute">params</span>": <span class="hljs-value">{}
+  </span>}
+  </code></pre>
+    <h3 id="admin">Admin</h3>
+    <h4 id="-api-admin-login">/api/admin/login</h4>
+    <p>Log in IoTgo admin area using email address and password. <strong><em>Authorization not required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"admin@iteadstudio.com"</span></span>,
+    "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"password"</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">jwt</span>": <span class="hljs-value"><span class="hljs-string">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAaXRlYWQuY2MiLCJfaWQiOiI1NDY1YTVmMDdmZGRlYjkwNjlhZDJlZDQiLCJjcmVhdGVkQXQiOiIyMDE0LTExLTE0VDA2OjQ5OjIwLjgyMloiLCJhcGlrZXkiOiJiNDVjMWU2MS05NjRhLTRhZDMtOWI5ZC0wYjk3YWM5NWZlMTQiLCJpYXQiOjE0MTU5NDc3NjB9.Rh8BLA7KPs4R74djwKCnHtM1ETYqFXmSIl1IRAbroWI"</span></span>,
+    "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"admin@iteadstudio.com"</span></span>,
+          "<span class="hljs-attribute">isAdmin</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+      </span>}
+  </span>}
+  </code></pre>
+    <h4 id="-api-admin-users">/api/admin/users</h4>
+    <p>Get the list of registered users on IoTgo. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">[{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"humingchun@gmail.com"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"ea62c15b-d194-4b16-a56e-7ad8433c5477"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:50:10.000Z"</span>
+  </span>}]
+  </code></pre>
+    <h4 id="-api-admin-users-apikey">/api/admin/users/:apikey</h4>
+    <p>Get detailed user information by using GET request, delete user and related devices by using DELETE request. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"humingchun@gmail.com"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"ea62c15b-d194-4b16-a56e-7ad8433c5477"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:50:10.000Z"</span>
+  </span>}
+  </code></pre>
+    <p>Request method: <code>DELETE</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"humingchun@gmail.com"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"ea62c15b-d194-4b16-a56e-7ad8433c5477"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:50:10.000Z"</span>
+  </span>}
+  </code></pre>
+    <h4 id="-api-admin-devices">/api/admin/devices</h4>
+    <p>Get the list of created/added devices on IoTgo. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">[{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span>
+  </span>}]
+  </code></pre>
+    <h4 id="-api-admin-devices-deviceid">/api/admin/devices/:deviceid</h4>
+    <p>Get detailed device information. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Switch"</span></span>,
+    "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0100000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"b45c1e61-964a-4ad3-9b9d-0b97ac95fe14"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-24T02:27:41.363Z"</span></span>,
+    "<span class="hljs-attribute">params</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">switch</span>": <span class="hljs-value"><span class="hljs-string">"on"</span>
+      </span>}</span>,
+    "<span class="hljs-attribute">lastModified</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:27:41.363Z"</span>
+  </span>}
+  </code></pre>
+    <h4 id="-api-admin-factorydevices">/api/admin/factorydevices</h4>
+    <p>Get issued licenses (for licensing indie devices) on IoTgo. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>GET</code></p>
+    <p>Response body:</p>
+  <pre><code class="lang-json">[{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0180000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"94b38bbe-57c8-49bf-a6c4-2871ee5bb873"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:50:20.000Z"</span>
+  </span>},
+    {
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"01"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0180000002"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"938a8f4f-9f0f-424b-b5ac-f58b8f7a539c"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T02:50:20.000Z"</span>
+  </span>}]
+  </code></pre>
+    <h4 id="-api-admin-factorydevices-create">/api/admin/factorydevices/create</h4>
+    <p>Generate new licenses for indie devices. <strong><em>Authorization required</em></strong></p>
+    <p>Request method: <code>POST</code></p>
+    <p>Request body:</p>
+  <pre><code class="lang-json">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"02"</span></span>,
+    "<span class="hljs-attribute">qty</span>": <span class="hljs-value"><span class="hljs-number">2</span>
+  </span>}
+  </code></pre>
+    <p>Response body:</p>
+  <pre><code class="lang-json">[{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"02"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0280000001"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"37e45852-a381-4243-8bfe-cc3c4c2becab"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T03:00:00.000Z"</span>
+  </span>},
+    {
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"ITEAD"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"02"</span></span>,
+    "<span class="hljs-attribute">deviceid</span>": <span class="hljs-value"><span class="hljs-string">"0280000002"</span></span>,
+    "<span class="hljs-attribute">apikey</span>": <span class="hljs-value"><span class="hljs-string">"41556a98-7685-424f-bc27-74bf712108b2"</span></span>,
+    "<span class="hljs-attribute">createdAt</span>": <span class="hljs-value"><span class="hljs-string">"2014-11-27T03:00:00.000Z"</span>
+  </span>}]
+  </code></pre>
+</div>

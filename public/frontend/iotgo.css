@@ -134,3 +134,14 @@ body {
 .iotgo-ready {
   color: #009900;
 }
+
+/* Hardware Reference */
+.hardware .text-center .img-responsive {
+  margin: auto;
+}
+.hardware .row-border {
+  margin: 20px auto;
+  border: 2px solid #DDD;
+  border-radius: 5px;
+  padding: 10px 10px 0 10px;
+}

@@ -1,12 +1,11 @@
 angular.module('iotgo').
-  factory('WS', [ '$window', function ($window) {
+  factory('WS', [ '$window', '$location', function ($window, $location) {
     if (! WebSocket) {
       return false;
     }
 
-    var uri = 'ws://iotgo.iteadstudio.com/api/ws';
+    var uri = 'ws://'+$location.host()+':'+$location.port()+'/api/ws';
     var ws = new WebSocket(uri);
-    var listeners = {};
 
     return {
       send: function (req) {
