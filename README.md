@@ -678,6 +678,10 @@ Response body:
 
 ## Device API
 
+## Supported Browsers
+
+IoTgo Web App currently supports the current and prior major release of Chrome, Firefox, Internet Explorer and Safari on a rolling basis, which means IE6/IE7/IE8/IE9 will not work properly.
+
 ## Support
 
 ## License
