@@ -117,8 +117,19 @@ module.exports = {
     page: {
         limit: 50,                          // Default query page limit
         sort: -1                            // Default query sort order
-    }
+    },
+		recaptcha: {
+				secret: 'reCAPTCHA secret key',			// https://developers.google.com/recaptcha/intro
+				url: 'https://www.google.com/recaptcha/api/siteverify'
+		}
 };
+```
+
+Edit public/frontend/views/signup.html and add your reCAPTCHA site key applied from Google
+
+```html
+<div ng-model="response" class="form-group" g-recaptcha
+    g-recaptcha-sitekey="Your reCAPTCHA site key goes here"></div>
 ```
 
 ### IoTgo as System Service
@@ -290,7 +301,8 @@ Request body:
 ```json
 {
     "email": "iotgo@iteadstudio.com",
-    "password": "password"
+    "password": "password",
+    "response": "The user response token provided by the reCAPTCHA to the user."
 }
 ```
 
