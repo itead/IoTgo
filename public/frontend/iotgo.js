@@ -1,4 +1,4 @@
-angular.module('iotgo', [ 'ngRoute', 'ngResource' ]).
+angular.module('iotgo', [ 'ngRoute', 'ngResource', 'gRecaptcha' ]).
   config([ '$routeProvider', '$locationProvider', '$httpProvider',
     function ($routeProvider, $locationProvider, $httpProvider) {
       $routeProvider.

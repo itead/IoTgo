@@ -2,8 +2,9 @@ angular.module('iotgo')
   .factory('User', [ '$http', '$window', function ($http, $window) {
     var session = undefined;
     return {
-      register: function (email, password, callback) {
-        $http.post('/api/user/register', { email: email, password: password }).
+      register: function (email, password, response, callback) {
+        $http.post('/api/user/register',
+          { email: email, password: password, response: response }).
           success(function (data) {
             if (data.error) {
               callback(data.error);

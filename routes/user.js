@@ -9,6 +9,13 @@ var db = require('../db/index');
 var User = db.User;
 var Device = db.Device;
 var FactoryDevice = db.FactoryDevice;
+var https = require('https');
+
+/**
+ * Private variables
+ */
+var recaptchaSecret = config.recaptcha.secret;
+var recaptchaUrl = config.recaptcha.url;
 
 /**
  * Exports
@@ -31,19 +38,61 @@ exports.route('/register').post(function (req, res) {
     return;
   }
 
-  User.register(email, password, function (err, user) {
-    if (err) {
-      res.send({
-        error: 'Email address already exists, please choose another one.'
-      });
-      return;
-    }
-
+  // Google reCAPTCHA verification
+  var response = req.body.response;
+  if (! response) {
     res.send({
-      jwt: jsonWebToken.sign(user, config.jwt.secret),
-      user: user
+      error: 'reCAPTCHA verification is required!'
+    });
+  }
+
+  var url = recaptchaUrl +
+    '?secret=' + recaptchaSecret +
+    '&response=' + response;
+
+  https.get(url, function (recaptchaRes) {
+    recaptchaRes.setEncoding('utf8');
+
+    var data = '';
+    recaptchaRes.on('data', function (chunk) {
+      data += chunk;
+    });
+    recaptchaRes.on('end', function () {
+      try {
+        data = JSON.parse(data);
+        if (! data.success) {
+          res.send({
+            error: 'reCAPTCHA verification failed!'
+          });
+          return;
+        }
+
+        User.register(email, password, function (err, user) {
+          if (err) {
+            res.send({
+              error: 'Email address already exists, please choose another one.'
+            });
+            return;
+          }
+
+          res.send({
+            jwt: jsonWebToken.sign(user, config.jwt.secret),
+            user: user
+          });
+        });
+      }
+      catch (err) {
+        res.send({
+          error: 'reCAPTCHA verification failed! Please try again later.'
+        });
+      }
+    });
+  }).on('error', function () {
+    res.send({
+      error: 'reCAPTCHA verification failed! Please try again later.'
     });
   });
+
 });
 
 // Login
