@@ -93,7 +93,7 @@ cd ../..
 Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo boot process.
 
 ```
-copy config.js.sample config.js
+cp config.js.sample config.js
 ```
 
 Edit config.js and change corresponding fields to reflect your hosting environment.
@@ -118,10 +118,10 @@ module.exports = {
         limit: 50,                          // Default query page limit
         sort: -1                            // Default query sort order
     },
-		recaptcha: {
-				secret: 'reCAPTCHA secret key',			// https://developers.google.com/recaptcha/intro
-				url: 'https://www.google.com/recaptcha/api/siteverify'
-		}
+    recaptcha: {
+		    secret: 'reCAPTCHA secret key',			// https://developers.google.com/recaptcha/intro
+        url: 'https://www.google.com/recaptcha/api/siteverify'
+    }
 };
 ```
 
