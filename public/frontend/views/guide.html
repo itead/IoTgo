@@ -1,1 +1,367 @@
-Guide
+<div class="guide row">
+
+  <div class="col-sm-9">
+    <h1 id="user-guide">1. User Guide</h1>
+
+    <h2 id="diy-user-guide">1.1. DIY Device User Guide</h2>
+    <p>DIY device refers to the hardware device that is designed and built by your own, for example, a DIY Arduino project, or DIY Raspberry Pi project. When you add the account and device information in the codes, you can sync data to IoTgo server and manipulate various devices through IoT platform.</p>
+    <p>Now we will show you how to synchronize temperature and humidity data from a DIY device to IoTgo platform.</p>
+
+    <h3 id="diy-register">
+      1.1.1. Register IoTgo Account and Get the API Key
+    </h3>
+    <p>First, you need an IoTgo account so that you can get your own API Key. The API Key is fatal because only add the Key in your codes, can the data sync to your IoTgo account.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/my-profile.jpg"></p>
+
+    <h3 id="diy-device">1.1.2. DIY Device</h3>
+    <p>We use Wboard Pro and SHT10 temperature and humidity sensor as example. Wboard can’t be plugged the electronic brick directly, so we add an expansion board on Wboard to make it connect with the electronic brick without soldering.</p>
+
+    <h3 id="diy-device-add">1.1.3. Add a New Device in Your IoTgo Account</h3>
+    <p>Click “My Device”, and choose “Create DIY Device”. </p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/my-device.jpg"></p>
+    <p>In the pop-up window, you need to fill in the information about this device name and type and then set its group name. Then click “create”, the DIY device is created successfully.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/create-device.jpg"></p>
+
+    <h3 id="diy-deviceid">1.1.4. Get Your DIY Device ID</h3>
+    <p>Return to “My Device” interface, you will see the new added DIY device icon, click it you can get the DIY device ID. Why you need a device ID? As a DIY device, when it communicates with server and upload data to the server, two codes will be needed to tell the server that this DIY device is belong to which device in which account. Therefore, the API Key is to identify your account, and the Device ID is to identify the specific device in the account.</p>
+    <p>For example, our new added DIY device ID is 0300000005.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/device-id.jpg"></p>
+
+    <h3 id="coding">1.1.5. Write the Code</h3>
+    <p>Write your codes to read the value of temperature and humidity, then the data will be uploaded to your IoTgo account through HTTP agreement (please refer to API Reference to know more). As we use Wboard Pro to do the experiment here, the IoTgo Arduino Library can be taken to use directly.</p>
+    <p>Use the temp_hum_sensor demo for Wboard Pro.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/coding.jpg"></p>
+    <p>Type the Device ID and API Key we’ve got in the above steps to THSENSOR_ID and THSENSOR_APIKEY. For example,</p>
+    <pre><code>
+    #define THSENSOR_ID            "0300000005"
+    #define THSENSOR_APIKEY        "310ef32d-e7f5-48db-a95e-b29fc07d5aaa"
+    </code></pre>
+    <p>Modify WIFI_SSID and WIFI_PASS to an effective wifi spot. For example,</p>
+    <pre><code>
+    #define WIFI_SSID           "ITEAD"
+    #define WIFI_PASS           "11223344"
+    </code></pre>
+    <p>Revise the SHT10 sensor pin number as below.</p>
+    <pre><code>
+    #define THSENSOR_DATA_PIN    (6)
+    #define THSENSOR_CLOCK_PIN   (7)
+    </code></pre>
+
+    <h3 id="debug">1.1.6. Upload and Debug</h3>
+    <p>After uploading the demo to WBoard Pro, you can open the serial monitor to get the debugging and running information printed from serial ports.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/upload-debug.jpg"></p>
+    <p>When “setup done” appears, the DIY device is starting to upload date to IoTgo Platform. You can login IoTgo platform, and open the device to see temperature and humidity data.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/status.jpg"></p>
+
+    <h2 id="indie-device">1.2. Indie Device User Guide</h2>
+    <p>Indie Device refers to the product that is productization. If developers use the open IoTgo platform to develop the smart device, you can just print the factory API Key and Device ID in product’s packing. When using Indie Device, users can add the device in IoTgo platform without coding.</p>
+
+    <h3 id="indie-register">1.2.1. Register IoTgo Account</h3>
+    <p>User need to register his IoTgo account first and login. Enter into “My Device” interface and click “Add Indie Device”.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/my-device.jpg"></p>
+    <p>In the pop-up window, you need to fill in the information as below.</p>
+    <p><img class="img-responsive img-thumbnail"
+            src="../images/guide/indie-device.jpg"></p>
+    <ul>
+      <li><strong>Device Name</strong>: Name it whatever you like. But the basic principle is easy for identifying such as thermometer.</li>
+      <li><strong>Group Name</strong>: you’d better put it in a certain group so that you
+        can handle them well-organized. For example, name the group Bedroom.</li>
+      <li><strong>Device ID</strong>: find it in the packing.</li>
+      <li><strong>Factory API Key</strong>: find it in the packing.</li>
+    </ul>
+    <p>Click “Add” and return to “My Device” interface, you can see the thermometer icon in the Bedroom group.</p>
+    <p>Power your Indie Device, it will connect IoTgo server automatically. How to configure wifi, please refer to the product manual. Later, the data read from the indie device will sync to your IoTgo account and you can remote access and control your Indie Device.</p>
+
+    <h1 id="developer-guide">2. Developer Guide</h1>
+
+    <h2 id="hardware-dev">2.1. Hardware Developer Guide</h2>
+    <h3 id="hardware-ref">2.1.1. Hardware Reference</h3>
+    <p>In this section, we will recommend several hardware platforms
+      compatible with IoTgo to you. By using these hardware platforms with
+      IoTgo, you can launch a rapid development for your project. You can
+      find their schematics, firmware codes and SDK in our wiki –
+      <a href="http://wiki.iteadstudio.com">wiki.iteadstudio
+        .com</a>.</p>
+    <p>Know more about it, please refer to
+      <a href="http://iotgo.iteadstudio.com/hardware">
+        http://iotgo.iteadstudio.com/hardware</a>.
+    </p>
+
+    <h3 id="hardware-lib">2.1.2. Firmware / Library</h3>
+    <p>For now, there are only two libraries: one is IoTgo Arduino Library, and the other is Segnix & IoTgo Segnix Library.</p>
+    <p><a href="https://github.com/itead/ITEADLIB_Arduino_IoTgo">
+      IoTgo Arduino Library</a> is mainly applied in arduino series
+          hardware. So far, we offer only library files including light, switch and temperature sensor. You can launch some simple projects by using this library.</p>
+    <p>IoTgo Arduino Library has layers following:</p>
+    <ul>
+      <li>IoTgo Device Layer: Switch/Light/THSensor</li>
+      <li>Http Proxy Layer: IoTgo</li>
+      <li>Network Layer: NetInterface</li>
+      <li>Ethernet Layer: ESP8266(WIFI)</li>
+      <li>Hardware Layer: MEGA/WBoard/WBoard Pro/IBoard Pro/GBoard Pro</li>
+    </ul>
+    <p>For more information, please refer to <a
+      href="http://docs.iteadstudio.com/IoTgo-ino/">http://docs.iteadstudio.com/IoTgo-ino/</a></p>
+    <p><a href="https://github.com/itead/Segnix">Segnix & IoTgo Segnix Library</a> is applied in single board
+          computers. Segnix is an open-source interface library for hardware manipulation based on Linux platform and compatible with Arduino API. The latest Segnix contains IoTgo Segnix Library, and you can invoke various interfaces to manipulate devices.</p>
+    <h3 id="hardware-tuts">2.1.3. DIY Tutorials</h3>
+    <p>Coming soon!</p>
+
+    <h2 id="server-dev">2.2. Server Developer Guide</h2>
+
+    <h3 id="server-install">2.2.1. Installation</h3>
+    <h4 id="prerequisite">Prerequisite</h4>
+    <ul>
+      <li><p><a href="http://git-scm.com/">Git</a>: Free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</p>
+      </li>
+      <li><p><a href="https://www.mongodb.org/">MongoDB</a>: Open-source document database, the leading NoSQL database</p>
+      </li>
+      <li><p><a href="http://nodejs.org/">Node.js</a>: An asynchronous JavaScipt event driven framework, and yes, JavaScript on the server!</p>
+      </li>
+      <li><p><a href="https://www.npmjs.org/package/forever">Forever</a>: Running Node application as system service.</p>
+      </li>
+      <li><p><a href="http://bower.io/">Bower</a>: A package manager for the web, optimized for the front-end.</p>
+      </li>
+    </ul>
+    <h4 id="install-iotgo">Install IoTgo</h4>
+    <p>Get IoTgo source code from github.com</p>
+    <pre><code>git clone https://github.com/itead/IoTgo.git</code></pre>
+    <p>Change directory to downloaded IoTgo and install dependencies.</p>
+    <pre><code>cd IoTgo &amp;&amp; npm install</code></pre>
+    <p>Change directory to IoTgo Web App frontend and install dependencies.</p>
+    <pre><code>cd public/frontend &amp;&amp; bower install</code></pre>
+    <p>Change directory to IoTgo Web App backend and install dependencies.</p>
+    <pre><code>cd ../backend &amp;&amp; bower install</code></pre>
+    <p>Change directory back to IoTgo root</p>
+    <pre><code>cd ../..</code></pre>
+    <h4 id="configure-iotgo">Configure IoTgo</h4>
+    <p>Copy config.js.sample to config.js which is the actual configuration file being used during IoTgo boot process.</p>
+    <pre><code>copy config.js.sample config.js</code></pre>
+    <p>Edit config.js and change corresponding fields to reflect your hosting environment.</p>
+    <pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
+      host: <span class="hljs-string">'iotgo.iteadstudio.com'</span>,          <span class="hljs-comment">// Hostname of IoTgo</span>
+      db: {
+      uri: <span class="hljs-string">'mongodb://localhost/iotgo'</span>,   <span class="hljs-comment">// MongoDB database address</span>
+      options: {
+      user: <span class="hljs-string">'iotgo'</span>,                  <span class="hljs-comment">// MongoDB database username</span>
+      pass: <span class="hljs-string">'iotgo'</span>                   <span class="hljs-comment">// MongoDB database password</span>
+      }
+      },
+      jwt: {
+      secret: <span class="hljs-string">'jwt_secret'</span>                <span class="hljs-comment">// Shared secret to encrypt JSON Web Token</span>
+      },
+      admin:{
+      <span class="hljs-string">'iotgo@iteadstudio.com'</span>: <span class="hljs-string">'password'</span> <span class="hljs-comment">// Administrator account of IoTgo</span>
+      },
+      page: {
+      limit: <span class="hljs-number">50</span>,                          <span class="hljs-comment">// Default query page limit</span>
+      sort: -<span class="hljs-number">1</span>                            <span class="hljs-comment">// Default query sort order</span>
+      },
+      recaptcha: {
+      secret: <span class="hljs-string">'reCAPTCHA secret key'</span>,                 <span class="hljs-comment">// https://developers.google.com/recaptcha/intro</span>
+      url: <span class="hljs-string">'https://www.google.com/recaptcha/api/siteverify'</span>
+      }
+    };
+    </code></pre>
+    <p>Edit public/frontend/views/signup.html and add your reCAPTCHA site key applied from Google</p>
+    <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">"response"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"form-group"</span> <span class="hljs-attribute">g-recaptcha</span>
+        <span class="hljs-attribute">g-recaptcha-sitekey</span>=<span class="hljs-value">"Your reCAPTCHA site key goes here"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    </code></pre>
+    <h4 id="iotgo-as-system-service">IoTgo as System Service</h4>
+    <p>To manage IoTgo like system service, such as:</p>
+    <pre><code>sudo service iotgo start  // Start IoTgo
+    sudo service iotgo stop // Stop IoTgo</code></pre>
+    <p>and make IoTgo start automatically during OS boot, we can create init scripts utilizing <a href="https://www.npmjs.org/package/forever">Forever</a> to monitor IoTgo.</p>
+    <p>The following init script is a working example. If you want to use it, please put the script in <code>/etc/init.d/</code> folder and change file permission to 755. You may also need to change <code>NAME</code>, <code>NODE_PATH</code>, <code>NODE_APPLICATION_PATH</code> to reflect your hosting environment.</p>
+    <pre><code>sudo touch /etc/init.d/iotgo
+    sudo chmod 755 /etc/init.d/iotgo
+    sudo update-rc.d iotgo defaults</code></pre>
+    <p><em>Note: please refer to <a href="https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/">Node.js and Forever as a Service: Simple Upstart and Init Scripts for Ubuntu</a> for detailed explanations of the script.</em></p>
+    <pre><code class="lang-bash">
+      <span class="hljs-shebang">#!/bin/bash</span>
+      <span class="hljs-comment">#</span>
+      <span class="hljs-comment"># An init.d script for running a Node.js process as a service using Forever as</span>
+      <span class="hljs-comment"># the process monitor. For more configuration options associated with Forever,</span>
+      <span class="hljs-comment"># see: https://github.com/nodejitsu/forever</span>
+      <span class="hljs-comment">#</span>
+      <span class="hljs-comment"># This was written for Debian distributions such as Ubuntu, but should still</span>
+      <span class="hljs-comment"># work on RedHat, Fedora, or other RPM-based distributions, since none of the</span>
+      <span class="hljs-comment"># built-in service functions are used. So information is provided for both.</span>
+      <span class="hljs-comment">#</span>
+
+      NAME=<span class="hljs-string">"ITEAD IoTgo"</span>
+      NODE_BIN_DIR=<span class="hljs-string">"/usr/bin:/usr/local/bin"</span>
+      NODE_PATH=<span class="hljs-string">"/home/itead/IoTgo/node_modules"</span>
+      APPLICATION_PATH=<span class="hljs-string">"/home/itead/IoTgo/bin/www"</span>
+      PIDFILE=<span class="hljs-string">"/var/run/iotgo.pid"</span>
+      LOGFILE=<span class="hljs-string">"/var/log/iotgo.log"</span>
+      MIN_UPTIME=<span class="hljs-string">"5000"</span>
+      SPIN_SLEEP_TIME=<span class="hljs-string">"2000"</span>
+
+      PATH=<span class="hljs-variable">$NODE_BIN_DIR</span>:<span class="hljs-variable">$PATH</span>
+      <span class="hljs-keyword">export</span> NODE_PATH=<span class="hljs-variable">$NODE_PATH</span>
+
+      <span class="hljs-function"><span class="hljs-title">start</span></span>() {
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"Starting <span class="hljs-variable">$NAME</span>"</span>
+      forever \
+      --pidFile <span class="hljs-variable">$PIDFILE</span> \
+      <span class="hljs-operator">-a</span> \
+      <span class="hljs-operator">-l</span> <span class="hljs-variable">$LOGFILE</span> \
+      --minUptime <span class="hljs-variable">$MIN_UPTIME</span> \
+      --spinSleepTime <span class="hljs-variable">$SPIN_SLEEP_TIME</span> \
+      start <span class="hljs-variable">$APPLICATION_PATH</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt; /dev/null &amp;
+      RETVAL=$?
+      }
+
+      <span class="hljs-function"><span class="hljs-title">stop</span></span>() {
+      <span class="hljs-keyword">if</span> [ <span class="hljs-operator">-f</span> <span class="hljs-variable">$PIDFILE</span> ]; <span class="hljs-keyword">then</span>
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"Shutting down <span class="hljs-variable">$NAME</span>"</span>
+      forever stop <span class="hljs-variable">$APPLICATION_PATH</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt; /dev/null
+      rm <span class="hljs-operator">-f</span> <span class="hljs-variable">$PIDFILE</span>
+      RETVAL=$?
+      <span class="hljs-keyword">else</span>
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$NAME</span> is not running."</span>
+      RETVAL=<span class="hljs-number">0</span>
+      <span class="hljs-keyword">fi</span>
+      }
+
+      <span class="hljs-function"><span class="hljs-title">restart</span></span>() {
+      stop
+      start
+      }
+
+      <span class="hljs-function"><span class="hljs-title">status</span></span>() {
+      <span class="hljs-built_in">echo</span> `forever list` | grep -q <span class="hljs-string">"<span class="hljs-variable">$APPLICATION_PATH</span>"</span>
+      <span class="hljs-keyword">if</span> [ <span class="hljs-string">"$?"</span> <span class="hljs-operator">-eq</span> <span class="hljs-string">"0"</span> ]; <span class="hljs-keyword">then</span>
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$NAME</span> is running."</span>
+      RETVAL=<span class="hljs-number">0</span>
+      <span class="hljs-keyword">else</span>
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$NAME</span> is not running."</span>
+      RETVAL=<span class="hljs-number">3</span>
+      <span class="hljs-keyword">fi</span>
+      }
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> <span class="hljs-keyword">in</span>
+      start)
+      start
+      ;;
+      stop)
+      stop
+      ;;
+      status)
+      status
+      ;;
+      restart)
+      restart
+      ;;
+      *)
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"Usage: {start|stop|status|restart}"</span>
+      <span class="hljs-keyword">exit</span> <span class="hljs-number">1</span>
+      ;;
+      <span class="hljs-keyword">esac</span>
+      <span class="hljs-keyword">exit</span> <span class="hljs-variable">$RETVAL</span>
+    </code></pre>
+    <h4 id="running-iotgo">Running IoTgo</h4>
+    <p>To run IoTgo, you can start it in console mode</p>
+    <pre><code>DEBUG=&quot;iotgo&quot; ./bin/www</code></pre>
+    <p>To run IoTgo on other port instead of 80, you can use PORT environment variable.</p>
+    <pre><code>PORT=&quot;3000&quot; DEBUG=&quot;iotgo&quot; ./bin/www</code></pre>
+    <p>To run IoTgo as system service</p>
+    <pre><code>sudo service iotgo start</code></pre>
+
+    <h3 id="source-code">2.2.2. Source Code</h3>
+    <p>The source code of IoTgo is hosted on
+      <a href="https://github.com/itead/IoTgo" target="_blank">Github</a> and
+      licensed under MIT, so basically you can do any thing you want to the
+      code.</p>
+    <p>The current version of IoTgo source code has three main components
+      that works with each other:</p>
+    <ul>
+      <li><strong>Web API</strong>: for managing users and devices. The code
+        is placed under folder routes</code></li>
+      <li><strong>Device API</strong>: for updating device status. The code
+        is placed under folder <code>protocol</code></li>
+      <li><strong>Web App</strong>: a simple Web App utilizing Web API and Device
+        API to provide a GUI which could be used to manage users, devices,
+        and also update device status. The code is placed under folder
+        <code>public</code></li>
+    </ul>
+    <h2 id="app-dev">2.3. App Developer Guide</h2>
+    <p>IoTgo comes with a simple Web App which works but is definitely not
+      stylish and user-friendly for every use case.</p>
+    <p>We are comfortable to admit we are not app experts, and this is the
+      reason we designed IoTgo to be an API server instead of traditional
+      website. We believe app developers out there could do much better app
+      than us by using IoTgo APIs.</p>
+    <ul>
+      <li><strong>Web API</strong>: for managing users and devices. Please
+        refer to <a href="/api#web-api">Web API section</a> of IoTgo API
+        doc</li>
+      <li><strong>Device API</strong>: for updating device status. Please
+        refer to <a href="/api#device-api">Device API section</a> of IoTgo API
+        doc</li>
+    </ul>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="sidebar-nav">
+      <ul class="nav">
+        <li>
+          <a href="#user-guide">1. User Guide</a>
+          <ul class="nav">
+            <li>
+              <a href="#diy-user-guide">1.1. DIY Device User Guide</a>
+              <ul class="nav">
+                <li><a href="#diy-register">1.1.1. Register IoTgo Account</a></li>
+                <li><a href="#diy-device">1.1.2. DIY Device</a></li>
+                <li><a href="#diy-device-add">1.1.3. Add a New Device in Your IoTgo Account</a></li>
+                <li><a href="#diy-deviceid">1.1.4. Get Your DIY Device ID</a></li>
+                <li><a href="#coding">1.1.5. Write the Code</a></li>
+                <li><a href="#debug">1.1.6. Upload and Debug</a></li>
+                <li><a href="#indie-device">1.1.6. Upload and Debug</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#indie-device">1.2. Indie Device User Guide</a>
+              <ul class="nav">
+                <li><a href="#indie-register">1.2.1. Register IoTgo Account</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#developer-guide">2. Developer Guide</a>
+          <ul class="nav">
+            <li>
+              <a href="#hardware-dev">2.1. Hardware Developer Guide</a>
+              <ul class="nav">
+                <li><a href="#hardware-ref">2.1.1. Hardware Reference</a></li>
+                <li><a href="#hardware-lib">2.1.2. Firmware / Library</a></li>
+                <li><a href="#hardware-tuts">2.1.3. DIY Tutorials</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#server-dev">2.2. Server Developer Guide</a>
+              <ul class="nav">
+                <li><a href="#server-install">2.2.1. Installation</a></li>
+                <li><a href="#source-code">2.2.2. Source Code</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#app-dev">2.3. App Developer Guide</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

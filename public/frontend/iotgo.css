@@ -145,3 +145,12 @@ body {
   border-radius: 5px;
   padding: 10px 10px 0 10px;
 }
+
+/* Guide */
+.guide .sidebar-nav {
+  border: 1px solid #DDD;
+  border-radius: 5px;
+}
+.guide .nav .nav {
+  margin-left: 1em;
+}
