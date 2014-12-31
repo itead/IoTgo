@@ -2,6 +2,7 @@
  * Dependencies
  */
 var methods = require('./methods');
+var interceptors = require('./interceptors');
 var EventEmitter = require('events').EventEmitter;
 var mixin = require('utils-merge');
 
@@ -29,17 +30,15 @@ var validate = function (req) {
  */
 module.exports = exports = function (req, callback) {
   if (! validate(req)) {
-    callback({ error: 400, reason: 'Bad Request' });
+    callback(interceptors(req, { error: 400, reason: 'Bad Request' }));
     return;
   }
 
   if (typeof methods[req.action] !== 'function') {
-    callback({
+    callback(interceptors(req, {
       error: 400,
-      reason: 'Bad Request',
-      apikey: req.apikey,
-      deviceid: req.deviceid
-    });
+      reason: 'Bad Request'
+    }));
     return;
   }
 

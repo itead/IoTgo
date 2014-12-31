@@ -6,6 +6,7 @@ var User = db.User;
 var Device = db.Device;
 var FactoryDevice = db.FactoryDevice;
 var validate = require('./types');
+var interceptors = require('./interceptors');
 var EventEmitter = require('events').EventEmitter;
 var mixin = require('utils-merge');
 
@@ -18,65 +19,53 @@ mixin(exports, EventEmitter.prototype);
 exports.register = function (req, callback) {
   FactoryDevice.exists(req.apikey, req.deviceid, function (err, device) {
     if (err || ! device) {
-      callback({
+      callback(interceptors(req, {
         error: 403,
-        reason: 'Forbidden',
-        apikey: req.apikey,
-        deviceid: req.deviceid
-      });
+        reason: 'Forbidden'
+      }));
       return;
     }
 
     Device.getDeviceByDeviceid(req.deviceid, function (err, device) {
       if (err || ! device) {
-        callback({
+        callback(interceptors(req, {
           error: 404,
-          reason: 'Not Found',
-          apikey: req.apikey,
-          deviceid: req.deviceid
-        });
+          reason: 'Not Found'
+        }));
         return;
       }
 
-      callback({
-        error: 0,
-        apikey: device.apikey,
-        deviceid: req.deviceid
-      });
+      callback(interceptors(req, {
+        error: 0
+      }));
     });
   });
 };
 
 exports.update = function (req, callback) {
   if (! req.params || typeof req.params !== 'object' || ! validate(req)) {
-    callback({
+    callback(interceptors(req, {
       error: 400,
-      reason: 'Bad Request',
-      apikey: req.apikey,
-      deviceid: req.deviceid
-    });
+      reason: 'Bad Request'
+    }));
     return;
   }
 
   Device.exists(req.apikey, req.deviceid, function (err, device) {
     if (err || ! device) {
-      callback({
+      callback(interceptors(req, {
         error: 403,
-        reason: 'Forbidden',
-        apikey: req.apikey,
-        deviceid: req.deviceid
-      });
+        reason: 'Forbidden'
+      }));
       return;
     }
 
     device.params = req.params;
     device.lastModified = new Date();
     device.save();
-    callback({
-      error: 0,
-      apikey: req.apikey,
-      deviceid: req.deviceid
-    });
+    callback(interceptors(req, {
+      error: 0
+    }));
 
     exports.emit('update', req);
   });
@@ -84,23 +73,19 @@ exports.update = function (req, callback) {
 
 exports.query = function (req, callback) {
   if (! Array.isArray(req.params)) {
-    callback({
+    callback(interceptors(req, {
       error: 400,
-      reason: 'Bad Request',
-      apikey: req.apikey,
-      deviceid: req.deviceid
-    });
+      reason: 'Bad Request'
+    }));
     return;
   }
 
   Device.exists(req.apikey, req.deviceid, function (err, device) {
     if (err || ! device) {
-      callback({
+      callback(interceptors(req, {
         error: 403,
-        reason: 'Forbidden',
-        apikey: req.apikey,
-        deviceid: req.deviceid
-      });
+        reason: 'Forbidden'
+      }));
       return;
     }
 
@@ -108,12 +93,10 @@ exports.query = function (req, callback) {
     device.params = device.params || {};
 
     if (! req.params.length) {
-      callback({
+      callback(interceptors(req, {
         error: 0,
-        params: device.params,
-        apikey: req.apikey,
-        deviceid: req.deviceid
-      });
+        params: device.params
+      }));
       return;
     }
 
@@ -123,11 +106,9 @@ exports.query = function (req, callback) {
         params[item] = device.params[item];
       }
     });
-    callback({
+    callback(interceptors(req, {
       error: 0,
-      params: params,
-      apikey: req.apikey,
-      deviceid: req.deviceid
-    });
+      params: params
+    }));
   });
 };
