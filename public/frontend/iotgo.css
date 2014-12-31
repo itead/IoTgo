@@ -99,6 +99,24 @@ body {
   color: #FFF;
 }
 /* Home page */
+.iotgo-slideshow {
+  position: relative;
+}
+.iotgo-slideshow-indicators {
+  bottom: 10px;
+  right: 10px;
+}
+div.rn-carousel-indicator span {
+  display: inline-block;
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+  text-indent: -999em;
+  background-color: #dddddd;
+}
+div.rn-carousel-indicator span:active {
+  background-color: red;
+}
 .iotgo-features {
   margin: 0;
   background-color: gainsboro;
