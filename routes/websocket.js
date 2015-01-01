@@ -83,8 +83,13 @@ module.exports = function (httpServer) {
         return;
       }
 
-      delete req.ws;
-      ws.send(JSON.stringify(req));
+      ws.send(JSON.stringify(req, function (key, value) {
+        if (key === 'ws') {
+          // exclude property ws from resulting JSON string
+          return undefined;
+        }
+        return value;
+      }));
     });
   });
 };
