@@ -36,7 +36,8 @@ exports.register = function (req, callback) {
       }
 
       callback(interceptors(req, {
-        error: 0
+        error: 0,
+        apikey: device.apikey
       }));
     });
   });

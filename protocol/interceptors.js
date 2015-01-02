@@ -24,18 +24,18 @@ exports.addInterceptor = function (interceptor) {
 
 // add deviceid and apikey to response.
 exports.addInterceptor(function (req, res) {
-  if (req.deviceid) {
+  if (req.deviceid && ! res.deviceid) {
     res.deviceid = req.deviceid;
   }
 
-  if (req.apikey) {
+  if (req.apikey && ! res.apikey) {
     res.apikey = req.apikey;
   }
 });
 
 // add sequence property to response if exists.
 exports.addInterceptor(function (req, res) {
-  if (req.sequence) {
+  if (req.sequence && ! res.sequence) {
     res.sequence = req.sequence;
   }
 });
