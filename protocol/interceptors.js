@@ -35,7 +35,7 @@ exports.addInterceptor(function (req, res) {
 
 // add sequence property to response if exists.
 exports.addInterceptor(function (req, res) {
-  if (req.sequence && ! res.sequence) {
+  if (typeof req.sequence !== 'undefined') {
     res.sequence = req.sequence;
   }
 });
