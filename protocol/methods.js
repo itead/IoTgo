@@ -44,7 +44,7 @@ exports.register = function (req, callback) {
 };
 
 exports.update = function (req, callback) {
-  if (! req.params || typeof req.params !== 'object' || ! validate(req)) {
+  if (typeof req.params !== 'object' || ! validate(req)) {
     callback(interceptors(req, {
       error: 400,
       reason: 'Bad Request'
@@ -62,7 +62,6 @@ exports.update = function (req, callback) {
     }
 
     device.params = req.params;
-    device.lastModified = new Date();
     device.save();
     callback(interceptors(req, {
       error: 0

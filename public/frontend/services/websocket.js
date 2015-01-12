@@ -17,6 +17,8 @@ angular.module('iotgo').
           return;
         }
 
+        req.userAgent = 'web';
+        req.sequence = '' + Date.now();
         ws.send(JSON.stringify(req));
       },
       listen: function (callback) {

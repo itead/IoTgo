@@ -49,8 +49,8 @@ var schema = new Schema({
   deviceid: { type: String, required: true, index: true, match: /^[0-9a-f]{10}$/ },
   apikey: { type: String, required: true, index: true },
   createdAt: { type: Date, index: true, default: now },
-  params: { type: Schema.Types.Mixed, default: empty },
-  lastModified: Date
+  online: { type: Boolean, index: true, default: false },
+  params: { type: Schema.Types.Mixed, default: empty }
 });
 
 schema.static('exists', function (apikey, deviceid, callback) {

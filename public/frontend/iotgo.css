@@ -103,6 +103,7 @@ body {
   position: relative;
 }
 .iotgo-slideshow-indicators {
+  position: absolute;
   bottom: 10px;
   right: 10px;
 }
@@ -114,7 +115,7 @@ div.rn-carousel-indicator span {
   text-indent: -999em;
   background-color: #dddddd;
 }
-div.rn-carousel-indicator span:active {
+div.rn-carousel-indicator span.active {
   background-color: red;
 }
 .iotgo-features {
