@@ -13,7 +13,7 @@ var apps = {};  // { deviceid: [ws, ws, ws] }
 
 var clean = function (ws) {
   ws.devices.forEach(function (deviceid) {
-    if (deviceid in devices) {
+    if (Array.isArray(devices[deviceid]) && devices[deviceid][0] === ws) {
       delete devices[deviceid];
       protocol.postMessage({
         type: 'device.online',
