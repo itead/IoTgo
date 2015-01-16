@@ -173,3 +173,8 @@ div.rn-carousel-indicator span.active {
 .guide .nav .nav {
   margin-left: 1em;
 }
+
+/* Hardware Reference */
+.solution .text-center .img-responsive {
+  margin: auto;
+}

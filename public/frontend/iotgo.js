@@ -48,6 +48,9 @@ angular.module('iotgo', [ 'ngRoute', 'ngResource', 'gRecaptcha', 'angular-carous
         when('/hardware', {
           templateUrl: '/views/hardware.html'
         }).
+        when('/solution', {
+          templateUrl: '/views/solution.html'
+        }).
         otherwise({
           redirectTo: '/'
         });
