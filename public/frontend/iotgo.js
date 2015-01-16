@@ -2,7 +2,6 @@ angular.module('iotgo', [ 'ngRoute', 'ngResource', 'gRecaptcha', 'angular-carous
   run([ '$location', function ($location) {
     // Permanent url support
     var path = $location.search().path;
-    console.log(path);
     if(path) {
       $location.search('path', null);
       $location.path(path);
