@@ -22,7 +22,7 @@ app.use('/api', routes);
 
 // catch 404 and redirect to /
 app.use(function(req, res, next) {
-  res.redirect('/');
+  res.redirect('/?path=' + req.path);
 });
 
 // error handlers
