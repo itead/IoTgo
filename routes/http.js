@@ -11,7 +11,7 @@ module.exports = function (req, res) {
     return;
   }
 
-  protocol(req.body, function (resBody) {
+  protocol.postRequest(req.body, function (resBody) {
     res.send(resBody);
   });
 };
