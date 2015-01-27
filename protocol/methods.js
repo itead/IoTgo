@@ -61,7 +61,8 @@ exports.update = function (req, callback) {
       return;
     }
 
-    device.params = req.params;
+    mixin(device.params, req.params);
+    device.markModified('params');
     device.save();
     callback(interceptors(req, {
       error: 0
@@ -88,9 +89,6 @@ exports.query = function (req, callback) {
       }));
       return;
     }
-
-    // Work around mongoose bug
-    device.params = device.params || {};
 
     if (! req.params.length) {
       callback(interceptors(req, {

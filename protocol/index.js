@@ -8,6 +8,7 @@ var EventEmitter = require('events').EventEmitter;
 var Device = require('../db/index').Device;
 var mixin = require('utils-merge');
 var config = require('../config');
+var utils = require('./utils');
 
 /**
  * Private variables and functions
@@ -61,8 +62,8 @@ exports.postRequest = function (req, callback) {
     return;
   }
 
-  if (req.action !== 'update' ||  req.userAgent === 'device' ||
-      typeof req.userAgent === 'undefined') {
+  if (req.action !== 'update' ||  utils.fromDevice(req) ||
+      ! utils.isFactoryDeviceid(req.deviceid)) {
     methods[req.action](req, callback);
     return;
   }
@@ -148,6 +149,8 @@ exports.postMessage = function (msg) {
       break;
   }
 };
+
+exports.utils = utils;
 
 methods.on('update', function (req) {
   exports.emit('device.update', req);

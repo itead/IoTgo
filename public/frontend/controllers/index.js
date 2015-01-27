@@ -4,12 +4,9 @@ angular.module('iotgo').
       $scope.slides = [{
         href: 'https://github.com/itead/IoTgo',
         src: '/images/home/slideshow/iot.jpg'
-      }/*, {
-        href: 'https://www.google.com',
-        src: '/images/home/slideshow/1.jpg'
       }, {
-        href: 'https://imall.iteadstudio.com',
-        src: '/images/home/slideshow/2.jpg'
-      }*/];
+        href: 'https://www.indiegogo.com/projects/iotgo-open-source-iot-cloud-solution',
+        src: '/images/home/slideshow/indiegogo.jpg'
+      }];
     }
   ]);
