@@ -75,15 +75,7 @@ protocol.on('device.online', function (req) {
 protocol.on('app.update', function (req) {
   devices[req.deviceid] && devices[req.deviceid].forEach(function (ws) {
     // Transform timers for ITEAD indie device
-    if (req.params && req.params.timers) {
-      var transReq = mixin({}, req);
-      transReq.params = mixin({}, req.params);
-      transReq.params.timers = protocol.utils.transformTimers(req.params.timers);
-      postRequest(ws, transReq);
-      return;
-    }
-
-    postRequest(ws, req);
+    postRequest(ws, protocol.utils.transformRequest(req));
   });
 });
 
@@ -121,8 +113,9 @@ module.exports = function (httpServer) {
           msg.ws = ws;
           protocol.postRequest(msg, function (res) {
             // Transform timers for ITEAD indie device
-            if (protocol.utils.fromDevice(msg) && res.params && res.params.timers) {
-              res.params.timers = protocol.utils.transformTimers(res.params.timers);
+            if (protocol.utils.fromDevice(msg) &&
+                protocol.utils.isFactoryDeviceid(msg.deviceid)) {
+              res = protocol.utils.transformResponse(res);
             }
             ws.send(JSON.stringify(res));
 
