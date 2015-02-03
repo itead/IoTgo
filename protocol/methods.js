@@ -63,6 +63,9 @@ exports.update = function (req, callback) {
 
     mixin(device.params, req.params);
     device.markModified('params');
+    if (req.params.timers) {
+      device.markModified('params.timers');
+    }
     device.save();
     callback(interceptors(req, {
       error: 0
