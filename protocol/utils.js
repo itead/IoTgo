@@ -21,7 +21,7 @@ exports.transformTimers = function (timers) {
       if (timeLeft <= 0) return;
 
       result.push({
-        enabled: true,
+        enabled: 1,
         type: 'once',
         at: timeLeft,
         do: timer.do
@@ -45,16 +45,9 @@ exports.transformRequest = function (req) {
     }
     else {
       if (Array.isArray(_req.params.timers)) {
+        _req.params.timers = exports.transformTimers(req.params.timers);
         if (_req.params.timers.length === 0) {
           _req.params.timers = 0;
-        }
-        else {
-          _req.params.timers = [];
-          req.params.timers.forEach(function (timer) {
-            var _timer = mixin({}, timer);
-            _timer.enabled = timer.enabled ? 1 : 0;
-            _req.params.timers.push(_timer);
-          });
         }
       }
     }
