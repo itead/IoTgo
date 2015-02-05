@@ -17,5 +17,9 @@ module.exports = {
     limit: 50,                          // Default query page limit
     sort: -1                            // Default query sort order
   },
+  recaptcha: {
+      secret: '',                       // Google reCAPTCHA serect
+      url: 'https://www.google.com/recaptcha/api/siteverify'
+    },
   pendingRequestTimeout: 3000
 };
