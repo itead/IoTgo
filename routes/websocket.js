@@ -145,7 +145,6 @@ module.exports = function (httpServer) {
 
             apps[msg.deviceid].push(ws);
             ws.devices.push(msg.deviceid);
-
           });
       }
     });

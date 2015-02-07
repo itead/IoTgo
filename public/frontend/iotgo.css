@@ -178,3 +178,17 @@ div.rn-carousel-indicator span.active {
 .solution .text-center .img-responsive {
   margin: auto;
 }
+
+@media (max-width: 767px) {
+  .iotgo-menu {
+    margin: 7.5px -15px;
+  }
+  .copyright .container > div {
+    margin: 1em 0;
+    padding: 0;
+  }
+  .copyright .container .text-center,
+  .copyright .container .text-right {
+    text-align: left!important;
+  }
+}

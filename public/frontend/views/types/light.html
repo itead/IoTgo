@@ -1,7 +1,12 @@
 <div class="device-params">
   Light: {{activeDevice.params.light | uppercase}}
 </div>
-<div>
+
+<div ng-if="isDeviceOnline(activeDevice)">
+  {{isDeviceOnline(activeDevice)}}
+</div>
+
+<div style="margin-top: 1em">
   <div class="btn-group">
     <button ng-click="turnOn(activeDevice, 'light')"
             ng-disabled="activeDevice.params.light === 'on'"
@@ -10,4 +15,48 @@
             ng-disabled="activeDevice.params.light === 'off'"
             type="button" class="btn btn-warning">Light Off</button>
   </div>
+</div>
+
+<div style="margin-top: 1em; text-align: left">
+  <ul class="list-group">
+    <li ng-repeat="timer in activeDevice.params.timers" class="list-group-item">
+      <div style="display: table">
+        <div style="display: table-cell; width: 100%">
+          <span>Light {{timer.do.light === 'on' ? 'ON' : 'OFF'}} </span>
+          <span>at {{timer.at | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <div>
+          <button ng-click="removeTimer(timer)" class="btn btn-danger">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="form-group">
+        <div class='input-group date' id='datetimepicker'>
+          <input id="timerAt" type='text' class="form-control" />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+      <div style="display: table">
+        <div style="display: table-cell; width: 100%">
+          Action:
+          <div id="timerAction" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-success">
+              <input type="radio" name="timerAction" value="on">ON
+            </label>
+            <label class="btn btn-warning">
+              <input type="radio" name="timerAction" value="off">OFF
+            </label>
+          </div>
+        </div>
+        <div>
+          <button ng-click="addTimer('light')" class="btn btn-primary">Add Timer</button>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>
