@@ -192,3 +192,48 @@ div.rn-carousel-indicator span.active {
     text-align: left!important;
   }
 }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .iotgo-menu {
+    margin-left: 0;
+  }
+  .navbar-default .navbar-collapse {
+    position: relative;
+    padding: 0;
+    margin-left: -15px;
+  }
+  .navbar-default .navbar-right {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+  .iotgo-slideshow ul,
+  .iotgo-slideshow ul img {
+    width: 720px;
+    height: 239px;
+  }
+}
+
+@media (max-width: 767px) {
+  .iotgo-slideshow ul,
+  .iotgo-slideshow ul img {
+    width: 720px;
+    height: 239px;
+  }
+}
+
+@media (min-width: 992px) {
+  .iotgo-slideshow ul,
+  .iotgo-slideshow ul img {
+    width: 940px;
+    height: 312px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .iotgo-slideshow ul,
+  .iotgo-slideshow ul img {
+    width: 1140px;
+    height: 378px;
+  }
+}

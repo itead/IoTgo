@@ -5,7 +5,7 @@ angular.module('iotgo')
   var callbacks = [];
 
   var connect = function (send) {
-    ws = new WebSocket(Settings.websocketServer);
+    ws = new WebSocket(Settings.websocketServer + '/api/ws');
 
     ws.addEventListener('message', function (message) {
       try {

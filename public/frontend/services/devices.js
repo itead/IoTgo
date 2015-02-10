@@ -1,9 +1,9 @@
 angular.module('iotgo')
 
-.factory('Devices', [ '$resource', '$window', '$rootScope', 'WS',
-  function ($resource, $window, $rootScope, WS) {
-    var Resource = $resource('/api/user/device/:id', { id: '@deviceid' }, {
-      add: { method: 'POST', url: '/api/user/device/add' }
+.factory('Devices', [ '$resource', '$window', '$rootScope', 'Settings', 'WS',
+  function ($resource, $window, $rootScope, Settings, WS) {
+    var Resource = $resource(Settings.httpServer + '/api/user/device/:id', { id: '@deviceid' }, {
+      add: { method: 'POST', url: Settings.httpServer + '/api/user/device/add' }
     });
 
     var _devices, _indexes = {};

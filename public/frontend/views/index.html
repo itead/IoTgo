@@ -2,11 +2,12 @@
   <div class="iotgo-slideshow">
     <ul rn-carousel
         rn-carousel-index="carouselIndex"
-        rn-carousel-auto-slide="4"
-        style="width: 1140px; height: 378px;">
+        rn-carousel-auto-slide="4">
       <li ng-repeat="slide in slides">
         <div class="layer">
-          <a ng-href="{{slide.href}}"><img ng-src="{{slide.src}}"></a>
+          <a ng-href="{{slide.href}}">
+            <img ng-src="{{slide.src}}">
+          </a>
         </div>
       </li>
     </ul>
@@ -59,9 +60,9 @@
 
   <div class="iotgo-process">
     <h4 class="iotgo-diy">Developers user process (DIY Device):</h4>
-    <div><img src="../images/home/process-diy.gif"></div>
+    <div><img class="img-responsive" src="../images/home/process-diy.gif"></div>
     <h4 class="iotgo-ready">Indie product user process:</h4>
-    <div><img src="../images/home/process-ready.gif"></div>
+    <div><img class="img-responsive" src="../images/home/process-ready.gif"></div>
   </div>
 
 </div>
