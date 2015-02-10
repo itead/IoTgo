@@ -26,7 +26,7 @@ IoTgo is not an ordinary IoT cloud platform, we designed this platform to be ope
 
 However, this platform is still very primitive. For now, it only supports three simple device types. We know what we provide is not enough to satisfy your need. That’s why we set up this Future Plan to improve IoTgo step by step. Let’s see what we will do in the near future.
 
-1. Improve UI design: display device connecting status and last connect time on device detail page.
+1. Improve UI design: display device connecting status and last connect time on device detail page. [*Connecting status* added]
 
 2. Support GPS device: receive device GPS information and display the exact location on google map.
 
@@ -36,9 +36,9 @@ However, this platform is still very primitive. For now, it only supports three 
 
 5. Store historic data collected from all kinds of sensers.
 
-6. Provide websocket interface and support bidirectional communication between IoTgo and devices.
+6. ~~Provide websocket interface and support bidirectional communication between IoTgo and devices.~~ [Done! *Currently is only enabled for indie device*]
 
-7. Provide Android app code
+7. ~~Provide Android app code.~~ [Done! Please head over to [IoTgo Android App](https://github.com/itead/IoTgo_Android_App)]
 
 **If you have any advice, please contact us. We sincerely appreciate it.**
 
