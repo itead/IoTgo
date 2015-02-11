@@ -42,7 +42,34 @@ However, this platform is still very primitive. For now, it only supports three 
 
 **If you have any advice, please contact us. We sincerely appreciate it.**
 
-## Installation
+## Installation [Automatically *almost*]
+
+If you just want to get a feel of IoTgo, or deploy it for internal use, we recommend [IoTgo docker image](https://registry.hub.docker.com/u/humingchun/iotgo/) which could set up a IoTgo instance by only 4 commands and within 3 minutes (depends on your internet bandwidth).
+
+*Note: `IoTgo docker image` should not be used in production environment, because it lacks several security features, such as Google reCAPTCHA*
+
+### Prerequisite
+
+- [Docker](https://www.docker.com/): An open platform for distributed applications for developers and sysadmins.
+
+### Install IoTgo
+
+```
+sudo docker pull dockerfile/mongodb
+sudo docker pull humingchun/iotgo
+sudo docker run -d --name mongodb dockerfile/mongodb mongod --smallfiles
+sudo docker run -d -p 80:80 --name iotgo --link mongodb:mongodb humingchun/iotgo node /opt/IoTgo/bin/www
+```
+
+And that's all! You can now access IoTgo at your linux box's ip address and port 80.
+
+If you want to use another port instead of 80, change the `-p` option in the last command from 80 to any other port, such as `-p 3000:80`.
+
+The admin panel is at http://linuxBoxIp:linuxBoxPort/admin, and the default admin account is `iotgo@iteadstudio.com`, corresponding password is `password`. If you want to change the default account and password, you can use `sudo docker exec -i -t iotgo /bin/bash` to login IoTgo docker container and use text editor (vi for example) to change admin information in the `config.js` file.
+
+## Installation [Manually]
+
+Install IoTgo manually takes some effort, but it also means everything is under control.
 
 ### Prerequisite
 
