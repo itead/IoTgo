@@ -12,25 +12,6 @@ exports.fromDevice = function (req) {
   return typeof req.userAgent === 'undefined' || req.userAgent === 'device';
 };
 
-exports.transformTimers = function (timers) {
-  var result = [];
-  timers.forEach(function (timer) {
-    if (timer && timer.enabled && timer.type === 'once' &&
-        timer.at && ! Number.isNaN(Date.parse(timer.at)) && timer.do) {
-      var timeLeft = Math.floor((Date.parse(timer.at) - Date.now()) / 1000);
-      if (timeLeft <= 0) return;
-
-      result.push({
-        enabled: 1,
-        type: 'once',
-        at: timeLeft,
-        do: timer.do
-      });
-    }
-  });
-  return result;
-};
-
 exports.isFactoryDeviceid = function (deviceid) {
   return parseInt(deviceid.substr(2, 1), 16) >= 8;
 };
@@ -44,11 +25,9 @@ exports.transformRequest = function (req) {
       _req.params = 0;
     }
     else {
-      if (Array.isArray(_req.params.timers)) {
-        _req.params.timers = exports.transformTimers(req.params.timers);
-        if (_req.params.timers.length === 0) {
-          _req.params.timers = 0;
-        }
+      if (Array.isArray(_req.params.timers) &&
+          _req.params.timers.length === 0) {
+        _req.params.timers = 0;
       }
     }
   }
@@ -57,10 +36,6 @@ exports.transformRequest = function (req) {
 };
 
 exports.transformResponse = function (res) {
-  if (res.params && res.params.timers) {
-    res.params.timers = exports.transformTimers(res.params.timers);
-  }
-
   Object.keys(res).forEach(function (key) {
     if (res[key] === true) {
       res[key] = 1;
