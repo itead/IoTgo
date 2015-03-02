@@ -22,4 +22,10 @@ module.exports = {
       url: 'https://www.google.com/recaptcha/api/siteverify'
     },
   pendingRequestTimeout: 3000
+  mailgun: {
+          api_key:'',                   //Mailgun API Key
+          domain:'',                    //Mailgun Domain Name
+          from:''                       //Mailgun Default SMTP Login Email
+  },
+  upgradeUrl:"http://v.itead.cc/api/upgrade"
 };

@@ -15,9 +15,9 @@
       <div class="panel-heading clearfix">
         <div class="panel-title pull-left">My Devices</div>
         <div class="btn-group pull-right">
-          <button ng-click="showModal('#createDevice')"
+          <button ng-click="showModal('#createDevice')" ng-disabled="isDisabled"
                   class="btn btn-warning">Create DIY Device</button>
-          <button ng-click="showModal('#addDevice')"
+          <button ng-click="showModal('#addDevice')" ng-disabled="isDisabled"
                   class="btn btn-success">Add Indie Device</button>
         </div>
       </div>

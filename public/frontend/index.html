@@ -53,6 +53,15 @@
   </div>
 </div>
 
+<div class="container" ng-controller="TipCtrl">
+    <div class="alert alert-warning alert-dismissible" role="alert" id="checkActiveDiv" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        Please go to your inbox to confirm your email account first! <span id="checkActiveSpan" style="display:none;">If you do not receive an e-mail, please click <a
+            class="alert-link" ng-click="hideSpan()">resend the activation email</a></span>
+    </div>
+</div>
+
 <div class="container main" ng-view></div>
 
 <div class="footer">
@@ -142,6 +151,7 @@
 <script src="controllers/signup.js"></script>
 <script src="controllers/profile.js"></script>
 <script src="controllers/devices.js"></script>
+<script src="controllers/tip.js"></script>
 
 <!-- Google reCAPTCHA -->
 <script src='https://www.google.com/recaptcha/api.js'></script>

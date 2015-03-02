@@ -1,7 +1,7 @@
 angular.module('iotgo').
-  controller('ProfileCtrl', [ '$scope', '$window', '$location', 'User',
+  controller('ProfileCtrl', ['$scope', '$window', '$location', 'User',
     function ($scope, $window, $location, User) {
-      if (! User.isLoggedIn()) {
+      if (!User.isLoggedIn()) {
         $window.alert('Restricted area, please login first!');
         $location.path('/login');
         return;
@@ -10,6 +10,18 @@ angular.module('iotgo').
       $scope.getEmail = function () {
         return User.getUser().email;
       };
+
+      var isActive = User.isActive();
+      if (isActive) {
+        $('#checkActiveDiv').hide();
+      } else {
+        $('#checkActiveDiv').show();
+        var isExpire = User.isExpire();
+        if (isExpire) {
+          $('#checkActiveSpan').show();
+        }
+      }
+      $scope.isDisabled = !isActive;
 
       $scope.getApikey = function () {
         return User.getUser().apikey;

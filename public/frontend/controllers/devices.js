@@ -214,11 +214,23 @@ angular.module('iotgo')
       });
     };
 
-    Devices.query(function (devices) {
-      _devices = devices;
-      $scope.devices = groupBy(_devices, 'group');
-    }, function () {
-      $window.alert('Retrieve device list failed!');
-    });
+    var isActive = User.isActive();
+    if (isActive) {
+      Devices.query(function (devices) {
+        _devices = devices;
+        $scope.devices = groupBy(_devices, 'group');
+      }, function () {
+        $window.alert('Retrieve device list failed!');
+      });
+      $('#checkActiveDiv').hide();
+    } else {
+      $scope.isDisabled = !isActive;
+      $('#checkActiveDiv').show();
+      var isExpire = User.isExpire();
+      if (isExpire) {
+        $('#checkActiveSpan').show();
+      }
+    }
+
   }
 ]);
