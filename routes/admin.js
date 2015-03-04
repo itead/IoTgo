@@ -7,6 +7,7 @@ var jsonWebToken = require('jsonwebtoken');
 var unless = require('express-unless');
 var request = require('request');
 var git_util = require('../lib/git-util');
+var ip_util = require('../lib/ip-util');
 var config = require('../config');
 var db = require('../db/index');
 var packagejson = require('../package');
@@ -79,25 +80,26 @@ exports.route('/login').post(function (req, res) {
 });
 
 var upgrade = function (params, req, res) {
-  request.post({
-    url: config.upgradeUrl,
-    form: {domain: params.domain, name: params.name, version: params.version}
-  }, function (err, httpResponse, body) {
-    if (err) {
-      res.send({
-        error: 'get remote version  Failed!'
-      });
-      return;
-    }
-    var json = JSON.parse(body);
-    var script;
-    if (json && 200 === json.flag) {
-      script = "<script>$('#checkDiv').show();</script>";
-      return res.json(script);
-    }
-    script = "<script>console.log('" + json.message + "');</script>";
-    res.json(script);
-
+  ip_util.getLocalIP(function (ip) {
+    request.post({
+      url: config.upgradeUrl,
+      form: {domain: params.domain, name: params.name, version: params.version, ip: ip}
+    }, function (err, httpResponse, body) {
+      if (err) {
+        res.send({
+          error: 'get remote version  Failed!'
+        });
+        return;
+      }
+      var json = JSON.parse(body);
+      var script;
+      if (json && 200 === json.flag) {
+        script = "<script>$('#checkDiv').show();</script>";
+        return res.json(script);
+      }
+      script = "<script>console.log('" + json.message + "');</script>";
+      res.json(script);
+    });
   });
 };
 
