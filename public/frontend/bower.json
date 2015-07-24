@@ -28,6 +28,7 @@
     "bootstrap": "~3.3.0",
     "fontawesome": "~4.2.0",
     "angular-touch": "~1.3.5",
-    "revolunet-angular-carousel": "~0.3.7"
+    "revolunet-angular-carousel": "~0.3.7",
+    "eonasdan-bootstrap-datetimepicker": "*"
   }
 }
