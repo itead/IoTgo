@@ -48,6 +48,8 @@ If you just want to get a feel of IoTgo, or deploy it for internal use, we recom
 
 *Note: `IoTgo docker image` should not be used in production environment, because it lacks several security features, such as Google reCAPTCHA*
 
+*Update: Here is a video demonstration of installation process: http://v.youku.com/v_show/id_XMTM1NjQ2NjcwNA==.html*
+
 ### Prerequisite
 
 - [Docker](https://www.docker.com/): An open platform for distributed applications for developers and sysadmins.
