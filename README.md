@@ -84,7 +84,7 @@ Install IoTgo manually takes some effort, but it also means everything is under 
 - [Forever](https://www.npmjs.org/package/forever): Running Node application as system service.
 
 - [Bower](http://bower.io/): A package manager for the web, optimized for the front-end.
-- 
+
 ### CentOS 6
 ```
 yum install git
