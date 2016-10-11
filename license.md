@@ -1,6 +1,6 @@
 (The MIT License)
 
-Copyright (c) 2009-2014 ITEAD Intelligent Systems <info@iteadstudio.com>
+Copyright (c) 2009-2016 Itead Studio <info@iteadstudio.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
